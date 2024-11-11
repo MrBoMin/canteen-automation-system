@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'canteen_automation.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'canteen_db',
+        'USER': 'postgres',
+        'PASSWORD': 'felix',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
