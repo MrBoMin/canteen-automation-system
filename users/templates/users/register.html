@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up - FreshCorners</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/logsign.css' %}">
+    <style>
+        .image-placeholder {
+            background-image: url('{% static "image/2.jpg" %}');
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left side with image and description -->
+        <div class="left">
+            <div class="image-placeholder"></div>
+            <div class="description">
+                <h2>Tasty and Delicious Meals</h2>
+                <p>Try out the delicious meals prepared by our staff with love and care. Delicious!! ♡</p>
+            </div>
+        </div>
+
+        <!-- Right side with the form -->
+        <div class="right">
+            <div class="header">
+                <h1>FreshCorners</h1>
+                <h3>Become a member of FreshCorners for delicious meals!</h3>
+            </div>
+
+            <!-- Registration Form -->
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <!-- Rendering the username field -->
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+                <!-- Rendering the full_name field -->
+                <label for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }}</label>
+                {{ form.full_name }}
+                {% for error in form.full_name.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+
+                <!-- Rendering the email field -->
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+
+                <!-- Rendering the password field -->
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+                <!-- Render contact_number field -->
+                <label for="{{ form.contact_number.id_for_label }}">{{ form.contact_number.label }}</label>
+                {{ form.contact_number }}
+                {% for error in form.contact_number.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+                <!-- Non-field errors -->
+                {% for error in form.non_field_errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+
+                <!-- Render role field -->
+                <label for="{{ form.role.id_for_label }}">{{ form.role.label }}</label>
+                {{ form.role }}
+                {% for error in form.role.errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+                <p style="margin-top: 20px;"> <a href="{% url 'login' %}"> Already have account? Login</a> </p>
+            <button type="submit" class="sign-in-button">Register Now</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

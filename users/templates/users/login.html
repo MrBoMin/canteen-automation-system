@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FreshCorners</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/logsign.css' %}">
+
+    <style>
+        .image-placeholder {
+            background-image: url('{% static "image/1.jpg" %}');
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left side with image and description -->
+        <div class="left">
+            <div class="image-placeholder"></div>
+            <div class="description">
+                <h2>Refreshing Scenery</h2>
+                <p>Enjoy the refreshing view with the best and delicious meals. Come try out and enjoy ♡.</p>
+            </div>
+        </div>
+        
+        <!-- Right side with the form -->
+        <div class="right">
+            <div class="header">
+                <h1>FreshCorners</h1>
+                <h3>Welcome to FreshCorners</h3>
+            </div>
+        <form method="post">
+            {% csrf_token %}
+        
+            <!-- Render username field manually -->
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
+        
+            <!-- Display field-specific errors -->
+            {% for error in form.email.errors %}
+            <div class="error">{{ error }}</div>
+            {% endfor %}
+        
+            <!-- Render password field manually -->
+            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            {{ form.password }}
+        
+            {% for error in form.password.errors %}
+            <div class="error">{{ error }}</div>
+            {% endfor %}
+        
+            <!-- Non-field errors (general form errors) -->
+            {% for error in form.non_field_errors %}
+            <div class="error">{{ error }}</div>
+            {% endfor %}
+        
+            
+            <p style="margin-top: 20px;"> <a href="{% url 'register' %}"> Register new account! </a> </p>
+
+
+            <button type="submit" class="sign-in-button">Sign in</button>
+        </form>
+
+
+        </div>
+    </div>
+</body>
+</html>

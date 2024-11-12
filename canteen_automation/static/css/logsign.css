@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Bree Serif', cursive;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.left, .right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px; /* Increased padding */
+}
+
+/* Left side styling */
+.left {
+    background-color: #0155AD; /* Background color similar to the image */
+    width: 50%; /* Slightly increase the width of the right side */
+    padding: 60px;
+}
+
+.image-placeholder {
+    width: 450px; /* Increased width */
+    height: 700px; /* Increased height */
+    background-color: #f7d6a6; /* Placeholder color */
+    margin-bottom: 30px;
+    border-radius: 5px;
+    background-image: url('../image/1.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(82%);
+}
+
+.description h2 {
+    font-size: 36px; /* Increased font size */
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.description p {
+    font-size: 18px; /* Increased font size */
+    color: #fffefe;
+}
+
+/* Right side styling */
+.right {
+    background-color: #ffffff;
+    width: 50%; /* Slightly increase the width of the right side */
+    padding: 60px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 48px; /* Increased font size */
+    color: #444;
+    /* font-family: 'Georgia', serif; */
+    font-weight: bold;
+    margin-bottom: 90px;
+}
+
+.header h3 {
+    font-size: 24px; /* Increased font size */
+    color: #888;
+    margin-bottom: 10px;
+}
+
+form label {
+    font-size: 18px; /* Increased font size */
+    color: #666;
+    width: 75%;
+    margin-bottom: 10px;
+    margin-left: -60px;
+    display: block;
+}
+
+form input {
+    width: calc(100% + 150px); /* Extends the input beyond its container */
+    max-width: none; /* Ensure it’s not limited by any maximum width */
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-left: -60px; /* Negative left margin */
+    margin-right: -20px; /* Negative right margin */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Style for the select (dropdown) field */
+form select {
+    width: calc(100% + 150px); 
+    max-width: none;
+    padding: 15px;
+    margin-bottom: 20px; /* Consistent spacing */
+    margin-left: -60px; /* Align left with input fields */
+    margin-right: -20px; /* Align right with input fields */
+    border: 1px solid #ddd; /* Match input border */
+    border-radius: 5px; /* Same border radius */
+    font-size: 18px; /* Same font size as input fields */
+    background-color: #fff; /* Match input background */
+    appearance: none; /* Remove default browser styling */
+}
+
+
+.forgot-password {
+    text-align: right;
+    margin-right: -90px;
+}
+
+.forgot-password a {
+    color: #5d9cec;
+    font-size: 17px; /* Increased font size */
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #0365e4;
+}
+
+.sign-in-button {
+    width: 80%;
+    padding: 15px; /* Increased padding */
+    background-color: #333;
+    color: #ffffff;
+    font-size: 20px; /* Increased font size */
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-top: 50px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sign-in-button:hover {
+    background-color: #e4dede; /* Change background color on hover */
+    color: #000000; /* Optional: Change text color on hover */
+}
+
+.create-account {
+    text-align: center;
+}
+
+.create-account p {
+    font-size: 18px; /* Increased font size */
+    color: #666;
+}
+
+.create-account a {
+    color: #5d9cec;
+    font-size: 18px; /* Increased font size */
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.create-account a:hover {
+    color: #0365e4;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left, .right {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 400px;
+    }
+
+    .description h2 {
+        font-size: 28px;
+    }
+
+    .description p {
+        font-size: 16px;
+    }
+
+    .header h1 {
+        font-size: 36px;
+        margin-bottom: 50px;
+    }
+
+    .header h3 {
+        font-size: 20px;
+    }
+
+    form label {
+        font-size: 16px;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    form input {
+        width: 100%;
+        margin-left: 0;
+        padding: 12px;
+    }
+
+    .sign-in-button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .forgot-password {
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .create-account p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 28px;
+    }
+
+    .header h3 {
+        font-size: 18px;
+    }
+
+    .description h2 {
+        font-size: 24px;
+    }
+
+    .description p {
+        font-size: 14px;
+    }
+
+    form label, form input {
+        font-size: 14px;
+    }
+
+    .sign-in-button {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .create-account p {
+        font-size: 14px;
+    }
+}
