@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
+
+# @login_required
 def home_view(request):
-    return render(request, 'pages/home.html')  # Template for the home page
-
+    return render(request, 'pages/home.html') 
 

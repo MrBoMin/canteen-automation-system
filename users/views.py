@@ -1,8 +1,9 @@
 
 from django.shortcuts import render, redirect
 from .forms import LoginForm, UserRegistrationForm  
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password  
+from django.contrib import messages
 
 
 def login_view(request):
@@ -16,7 +17,11 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)  # Logs the user in
-                return redirect('home')  # Redirect to the homepage
+                next_url = request.GET.get('next')  # Get next parameter from query string
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    return redirect('home')  # Redirect to home page
             else:
                 form.add_error(None, 'Invalid email or password')
     else:
@@ -31,8 +36,13 @@ def register_view(request):
             user = form.save(commit=False)
             user.password = make_password(form.cleaned_data['password'])
             user.save()
-            
+            messages.success(request,'Registration successful! You can now log in.')
             return redirect('login')  
     else:
         form = UserRegistrationForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
