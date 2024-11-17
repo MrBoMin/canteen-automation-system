@@ -1,0 +1,62 @@
+<div class="header-top">
+    <div class="contact-info">
+        <span class="icon"><i class="fas fa-envelope"></i></span>
+        <p>canteen@gmail.com</p>
+        <span class="icon"><i class="fas fa-phone-alt"></i></span>
+        <p>+959 333 445 432</p>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<div class="header-nav">
+    <div class="logo">
+        <!-- Add logo image or text here -->
+        <div class="logo-placeholder"><a href="#">FreshCorners</a></div>
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-icons">
+        <div class="noti-dropdown-container">
+            <a href="#" class="noti-button">
+                <i class="fas fa-bell"></i>
+                <span class="cart-count">00</span>
+            </a>
+            <div class="noti-dropdown">
+                <p>1. Your Order has been recieved.</p>
+                <p>2. Your Order has been recieved.</p>
+                <p>3. Your Order has been recieved.</p>
+            </div>
+        </div>
+        <a href="cartDetaill.html" class="cart-button">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count" class="cart-count">00</span>
+        </a>
+        <div class="profile-dropdown-container">
+            <a href="#" class="profile-button">
+                <i class="fas fa-user"></i>
+            </a>
+            <div class="profile-dropdown">
+                <a href="profile.html">My Profile</a>
+                <a href="cartDetaill.html">Checkout</a>
+                <a href="myOrderHistoryDetailView.html">Order Detail</a>
+                <a href="myOrderHistory.html">Order History</a>
+                <a href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="header-image">
+    {# <img src="../static/image/4.jpeg" alt="Menu Image"> #}
+    <div class="page-title">
+        {# <h1>Masdfasdfasdfasdfasdasf</h1> #}
+    </div>
+</div>

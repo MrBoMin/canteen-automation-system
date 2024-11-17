@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FreshCorners{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/headstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+    <!-- Include Header -->
+<div id="header-placeholder"></div>
+
+    <!-- Main Content Block -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Include Footer -->
+<div id="footer-placeholder"></div>
+</body>
+
+    {% block script_block %}
+    
+    {% endblock script_block %}
+
+</html>

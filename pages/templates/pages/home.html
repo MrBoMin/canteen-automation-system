@@ -1,11 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Hello
-</body>
-</html>
+
+{% extends 'base.html' %}
+
+{% block title %}Menu - FreshCorners{% endblock %}
+
+{% block content %}
+    <section class="today-discounts">
+        <div class="header-with-buttons">
+            <h2>Today Discounts</h2>
+            <div class="carousel-nav-buttons">
+                <button class="carousel-nav left"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="carousel-nav right"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="discount-carousel">
+            <div class="discounts-container">
+                {% for item in discounted_items %}
+                <div class="discount-card">
+                    <img src="{{ item.photo.url }}" alt="{{ item.item_name }}">
+                    <div>
+                        <h3>{{ item.item_name }}</h3>
+                        <p>{{ item.price }} <s>5200</s> MMK</p> <!-- You can customize the original price logic -->
+                        <div class="actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+    <section class="food-section">
+        <h1>Popular Delicious Foods</h1>
+        <div class="food-container">
+            {% for item in popular_items %}
+            <div class="food-card">
+                <img src="{{ item.photo.url }}" alt="{{ item.item_name }}">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">{{ item.category.name }}</div>
+                    </div>
+                    <h3>{{ item.item_name }}</h3>
+                    <p class="price"> $ {{ item.price }}</p>
+                    <div class="actionss">
+                        <button class="add-to-cart" onclick="incrementCartCount()">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <a href="#">
+                                <button><i class="fa-solid fa-eye"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+    
+        </div>
+    </section>
+    
+    <section class="stats">
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="circle">
+                    <p class="number">345 +</p>
+                </div>
+                <div class="icon-label">
+                    <div class="icon-placeholder"><i class="fa-solid fa-bowl-food"></i></div>
+                    <p>Menus</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="circle">
+                    <p class="number">345 +</p>
+                </div>
+                <div class="icon-label">
+                    <div class="icon-placeholder"><i class="fa-solid fa-people-group"></i></div>
+                    <p>Customers</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="circle">
+                    <p class="number">345 +</p>
+                </div>
+                <div class="icon-label">
+                    <div class="icon-placeholder"><i class="fa-solid fa-gem"></i></div>
+                    <p>Best Menus</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="circle">
+                    <p class="number">5 +</p>
+                </div>
+                <div class="icon-label">
+                    <div class="icon-placeholder"><i class="fa-solid fa-user-large"></i></div>
+                    <p>Staff</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block script_block %}
+    <script src="../static/js/headfoot.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.querySelector(".discounts-container");
+            const leftButton = document.querySelector(".left");
+            const rightButton = document.querySelector(".right");
+
+            const cardWidth = container.querySelector(".discount-card").offsetWidth + 30; // Card width + gap
+            let scrollPosition = 0;
+
+            rightButton.addEventListener("click", () => {
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                scrollPosition = Math.min(scrollPosition + cardWidth, maxScroll);
+                container.scrollTo({ left: scrollPosition, behavior: "smooth" });
+            });
+
+            leftButton.addEventListener("click", () => {
+                scrollPosition = Math.max(scrollPosition - cardWidth, 0);
+                container.scrollTo({ left: scrollPosition, behavior: "smooth" });
+            });
+        });
+
+        function incrementCartCount() {
+            const cartCountElement = document.getElementById("cart-count");
+            let cartCount = parseInt(cartCountElement.textContent) || 0;
+            cartCount++;
+            cartCountElement.textContent = cartCount.toString().padStart(2, "0");
+            console.log(`Cart count updated: ${cartCount}`);
+        }
+    </script>
+{% endblock script_block %}
+
+

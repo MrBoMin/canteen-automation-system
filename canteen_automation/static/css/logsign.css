@@ -105,21 +105,6 @@ form input {
     font-size: 18px;
 }
 
-/* Style for the select (dropdown) field */
-form select {
-    width: calc(100% + 150px); 
-    max-width: none;
-    padding: 15px;
-    margin-bottom: 20px; /* Consistent spacing */
-    margin-left: -60px; /* Align left with input fields */
-    margin-right: -20px; /* Align right with input fields */
-    border: 1px solid #ddd; /* Match input border */
-    border-radius: 5px; /* Same border radius */
-    font-size: 18px; /* Same font size as input fields */
-    background-color: #fff; /* Match input background */
-    appearance: none; /* Remove default browser styling */
-}
-
 
 .forgot-password {
     text-align: right;
