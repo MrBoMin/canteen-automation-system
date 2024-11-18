@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Menu{% endblock title %}
+{% block content %}
+    <div class="list-btn">
+        <button id="toggleButton"><i class="fa-solid fa-list"></i></button>
+    </div>
+    <div class="side-container" id="sideContainer">
+        <h3 class="container-title">Categories</h3>
+        <button id="closeButton"><i class="fa-solid fa-list"></i></button>
+        <ul class="container-links">
+            <li><a href="#snack">Snack</a></li>
+            <li><a href="#drink">Drink</a></li>
+            <li><a href="#cafe">Cafe</a></li>
+            <li><a href="#noodle">Noodle</a></li>
+            <li><a href="#rice">Rice</a></li>
+            <li><a href="#fish">Fish</a></li>
+            <li><a href="#vegetable">Vegetable</a></li>
+            <li><a href="#beef">Beef</a></li>
+            <li><a href="#chicken">Chicken</a></li>
+        </ul>
+    </div>
+    <section class="food-section2">
+        <div class="search-bar">
+            <input type="text" placeholder="search...">
+            <select>
+                <option>Default Sorting</option>
+                <option>Beef</option>
+                <option>Snack</option>
+                <option>Dessert</option>
+                <option>Chicken</option>
+                <option>Cafe</option>
+                <option>Drink</option>
+                <option>Noodle</option>
+                <option>Rice</option>
+                <option>Fish</option>
+                <option>Vegetable</option>
+            </select>
+            <button>Search</button>
+        </div>
+        <div class="food-container2">
+
+                        {% for item in menu_items %}
+                        <div class="food-card">
+                            <img src="{{ item.photo.url }}" alt="{{ item.item_name }}">
+                            <div class="food-info">
+                                <div class="food-details">
+                                    <div class="rating">★★★★★ <span>4.5</span></div>
+                                    <div class="category">{{ item.category.name }}</div>
+                                </div>
+                                <h3>{{ item.item_name }}</h3>
+                                <p class="price"> $ {{ item.price }}</p>
+                                <div class="actionss">
+                                    <button class="add-to-cart" onclick="incrementCartCount()">Add to Cart</button>
+                                    <div class="other-actions">
+                                        <button><i class="fa-solid fa-heart"></i></button>
+                                        <a href="{% url 'menu:menu_detail' item.id %}">
+                                            <button><i class="fa-solid fa-eye"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                
+           
+            <!-- More food cards as needed -->
+        </div>
+        <!-- Pagination -->
+        <div class="pagination">
+            <button><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </section>
+{% endblock content %}
+
+{% block script_block %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const foodCards = Array.from(document.querySelectorAll('.food-card')); // Select all food cards
+        const paginationContainer = document.querySelector('.pagination');
+        const itemsPerPage = 12; // Number of items per page
+
+        let currentPage = 1;
+        const totalPages = Math.ceil(foodCards.length / itemsPerPage);
+
+        // Function to render food cards for the current page
+        const renderFoodCards = () => {
+            // Hide all food cards initially
+            foodCards.forEach((card) => (card.style.display = 'none'));
+
+            // Show only the items for the current page
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            foodCards.slice(start, end).forEach((card) => {
+                card.style.display = 'block';
+            });
+        };
+
+        // Function to update pagination buttons
+        const updatePagination = () => {
+            paginationContainer.innerHTML = ''; // Clear existing buttons
+
+            // Left arrow
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderFoodCards();
+                    updatePagination();
+                }
+            });
+            paginationContainer.appendChild(prevButton);
+
+            // Numbered buttons
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    renderFoodCards();
+                    updatePagination();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+
+            // Right arrow
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderFoodCards();
+                    updatePagination();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        };
+
+        // Initialize the pagination
+        renderFoodCards();
+        updatePagination();
+    });
+
+</script>
+{% endblock script_block %}

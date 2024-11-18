@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
     path('users/', include('users.urls')),
+    path('menu/', include('menu.urls', namespace='menu')),  # Include menu app URLs
 ]
 
 

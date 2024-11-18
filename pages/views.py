@@ -26,10 +26,3 @@ def about_view(request):
 def contact_view(request):
     return render(request, 'pages/contact.html')
 
-
-
-def header_view(request):
-    return render(request, 'header.html')
-
-def footer_view(request):
-    return render(request, 'footer.html')

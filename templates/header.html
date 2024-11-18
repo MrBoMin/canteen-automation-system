@@ -17,7 +17,7 @@
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="menu.html">Menu</a></li>
+            <li><a href="{% url 'menu:menu_list' %}">Menu</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
     </nav>
@@ -55,8 +55,9 @@
 
 
 <div class="header-image">
-    {# <img src="../static/image/4.jpeg" alt="Menu Image"> #}
+    {% load static %}
+    <img src=" {% static 'image/4.jpeg' %}" alt="Menu Image">
     <div class="page-title">
-        {# <h1>Masdfasdfasdfasdfasdasf</h1> #}
+        <h1>Fresh Corner</h1>
     </div>
 </div>

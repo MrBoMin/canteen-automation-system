@@ -1,49 +1,45 @@
-<!-- Example HTML File -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Details</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/headstyle.css' %}">
-    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <div id="header-placeholder"></div>
+{% extends "base.html" %}
+{% block title %}
+About Us
+{% endblock title %}
+{% block content %}
     <section class="overlay-section">
         <div class="overlay">
             <div class="container">
                 <h1>Why Should Choose Us?</h1>
-                <p class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur repellendus optio debitis. Lorem ipsum</p>
+                <p class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui
+                    placeat inventore consectetur repellendus optio debitis. Lorem ipsum</p>
                 <div class="features">
                     <div class="feature-box">
-                    <i class="fa-solid fa-bowl-food"></i>
+                        <i class="fa-solid fa-bowl-food"></i>
                         <div class="feature-info">
                             <h3>Fresh Food</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur optio debitis.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat
+                                inventore consectetur optio debitis.</p>
                         </div>
                     </div>
                     <div class="feature-box">
-                    <i class="fa-solid fa-truck"></i>
+                        <i class="fa-solid fa-truck"></i>
                         <div>
                             <h3>Fast Delivery</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur optio debitis.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat
+                                inventore consectetur optio debitis.</p>
                         </div>
                     </div>
                     <div class="feature-box">
-                    <i class="fa-solid fa-ranking-star"></i>
+                        <i class="fa-solid fa-ranking-star"></i>
                         <div>
                             <h3>Quality Maintain</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur optio debitis.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat
+                                inventore consectetur optio debitis.</p>
                         </div>
                     </div>
                     <div class="feature-box">
-                    <i class="fa-regular fa-clock"></i>
+                        <i class="fa-regular fa-clock"></i>
                         <div>
                             <h3>24/7 Service</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur optio debitis.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat
+                                inventore consectetur optio debitis.</p>
                         </div>
                     </div>
                 </div>
@@ -93,17 +89,9 @@
             </div>
         </div>
     </section>
-    <!-- Image Section with Title -->
-    <!-- <div class="header-image">
-        <img src="../static/image/4.jpeg" alt="Menu Image">
-        <div class="page-title">
-            <h1>Menu Details</h1>
-        </div>
-    </div> -->
-    
-    <div id="footer-placeholder"></div>
 
-    <script src="../static/js/headfoot.js"></script>
+{% endblock content %}
+<!-- Example HTML File -->
 
-</body>
-</html>
+
+

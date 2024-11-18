@@ -175,21 +175,21 @@ body {
   
   .food-card img {
     width: 100%;
-    height: 250px; /* Set a fixed height for all images */
-    object-fit: cover; /* Ensures the image covers the area without stretching */
-    border-radius: 8px; /* Optional: keeps the corners rounded */
+    height: 200px;
+    object-fit: cover; 
+    border-radius: 8px; 
     margin-bottom: 10px;
   }
 
   .food-info {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
   }
   
   .food-details {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   
   .food-details .rating {
@@ -202,9 +202,9 @@ body {
   }
   
   .food-details .category {
-    font-size: 1em;
+    font-size: .7em;
     color: #ffffff;
-    background-color: #002855;
+    background-color: #002811;
     padding: 10px;
     margin-right: -15px;
     margin-bottom: 10px;
@@ -220,7 +220,7 @@ body {
 .food-card .price {
     font-size: 1.2em;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 7.5px;
     margin-left: -5px
   }
   
@@ -664,8 +664,10 @@ p.subtitle {
 .food-container2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    gap: 30px;
+    margin-top: 40px;
+
+
 }
   
   /* Pagination */
