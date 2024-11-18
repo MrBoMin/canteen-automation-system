@@ -44,8 +44,10 @@
                 <h1>FreshCorners</h1>
                 <h3>Welcome to FreshCorners</h3>
             </div>
-            <form method="post">
+            <form method="post"  action="{% url 'login' %}">
             {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+
                 <div>
 
                     {% if messages %}

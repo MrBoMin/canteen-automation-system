@@ -16,8 +16,8 @@
     <nav>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'menu:menu_list' %}">Menu</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
     </nav>
@@ -47,7 +47,11 @@
                 <a href="cartDetaill.html">Checkout</a>
                 <a href="myOrderHistoryDetailView.html">Order Detail</a>
                 <a href="myOrderHistory.html">Order History</a>
-                <a href="login.html">Logout</a>
+                <a class="logout-button">
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form></a> 
             </div>
         </div>
     </div>

@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+{% block title %}
+Profile
+{% endblock title %}Profile
+{% block content %}
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+            <img src="../static/image/8.jpg" alt="User Photo">
+            <h3>U Mya San</h3>
+            <p>Sar Nay B</p>
+            <ul>
+                <li>
+                    <span class="icon-box"><i class="fas fa-user"></i></span>
+                    <a href="profile.html">Personal Info</a>
+                </li>
+                <li>
+                    <span class="icon-box"><i class="fas fa-shopping-cart"></i></span>
+                    <a href="myOrder.html">My Order</a>
+                </li>
+                <li>
+                    <span class="icon-box"><i class="fas fa-history"></i></span>
+                    <a href="myOrderHistory.html">Order History</a>
+                </li>
+                <li>
+                    <span class="icon-box"><i class="fas fa-key"></i></span>
+                    <a href="chagepassword.html">Change Password</a>
+                </li>
+                <li>
+                    <span class="icon-box"><i class="fas fa-sign-out-alt"></i></span>
+                    <a href="Login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+    
+        <!-- Main Content -->
+        <div class="profile-main">
+            <div class="header">
+                <h2>Personal Information</h2>
+                <a href="editinfouser.html" class="edit-btn">Edit</a>
+            </div>
+            <div class="info-section">
+                <div>
+                    <span>Name :</span>
+                    <p>U Mya San</p>
+                </div>
+                <div>
+                    <span>Email :</span>
+                    <p>umyasan123@gmail.com</p>
+                </div>
+                <div>
+                    <span>Phone :</span>
+                    <p>09 333 22 4321</p>
+                </div>
+                <div>
+                    <span>Address :</span>
+                    <p>No1, Pyay Road, Thit Sar Street, Yangon</p>
+                </div>
+                <div>
+                    <span>Bio :</span>
+                    <p>Sar Nay B</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="food-section2">
+        <h1>Favourite</h1>
+        <div class="food-container2">
+            <!-- Food Card 1 -->
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Dessert</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat similar blocks for other cards -->
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Dessert</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Dessert</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Dessert</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Dessert</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="../static/image/6.jpg" alt="Dish 2">
+                <div class="food-info">
+                    <div class="food-details">
+                        <div class="rating">★★★★★ <span>4.5</span></div>
+                        <div class="category">Beef</div>
+                    </div>
+                    <h3>Fried Chicken</h3>
+                    <p class="price">5200 MMK</p>
+                    <div class="actionss">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="other-actions">
+                            <button><i class="fa-solid fa-heart"></i></button>
+                            <button><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- More food cards as needed -->
+        </div>
+        <!-- Pagination -->
+        <div class="pagination">
+            <button><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+{% endblock content %}
+{% block script_block %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const foodCards = Array.from(document.querySelectorAll('.food-card')); // Select all food cards
+            const paginationContainer = document.querySelector('.pagination');
+            const itemsPerPage = 8; // Number of items per page
+
+            let currentPage = 1;
+            const totalPages = Math.ceil(foodCards.length / itemsPerPage);
+
+            // Function to render food cards for the current page
+            const renderFoodCards = () => {
+                // Hide all food cards initially
+                foodCards.forEach((card) => (card.style.display = 'none'));
+
+                // Show only the items for the current page
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                foodCards.slice(start, end).forEach((card) => {
+                    card.style.display = 'block';
+                });
+            };
+
+            // Function to update pagination buttons
+            const updatePagination = () => {
+                paginationContainer.innerHTML = ''; // Clear existing buttons
+
+                // Left arrow
+                const prevButton = document.createElement('button');
+                prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderFoodCards();
+                        updatePagination();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+
+                // Numbered buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    if (i === currentPage) {
+                        pageButton.classList.add('active');
+                    }
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderFoodCards();
+                        updatePagination();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                // Right arrow
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderFoodCards();
+                        updatePagination();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            };
+
+            // Initialize the pagination
+            renderFoodCards();
+            updatePagination();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const foodCards = Array.from(document.querySelectorAll('.review')); // Select all food cards
+            const paginationContainer = document.querySelector('.pagination');
+            const itemsPerPage = 3; // Number of items per page
+
+            let currentPage = 1;
+            const totalPages = Math.ceil(foodCards.length / itemsPerPage);
+
+            // Function to render food cards for the current page
+            const renderFoodCards = () => {
+                // Hide all food cards initially
+                foodCards.forEach((card) => (card.style.display = 'none'));
+
+                // Show only the items for the current page
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                foodCards.slice(start, end).forEach((card) => {
+                    card.style.display = 'block';
+                });
+            };
+
+            // Function to update pagination buttons
+            const updatePagination = () => {
+                paginationContainer.innerHTML = ''; // Clear existing buttons
+
+                // Left arrow
+                const prevButton = document.createElement('button');
+                prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderFoodCards();
+                        updatePagination();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+
+                // Numbered buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    if (i === currentPage) {
+                        pageButton.classList.add('active');
+                    }
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderFoodCards();
+                        updatePagination();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                // Right arrow
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderFoodCards();
+                        updatePagination();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            };
+
+            // Initialize the pagination
+            renderFoodCards();
+            updatePagination();
+        });
+
+    </script>
+{% endblock script_block %}

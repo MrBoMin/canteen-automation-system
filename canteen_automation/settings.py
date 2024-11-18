@@ -113,6 +113,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTH_USER_MODEL = 'users.User'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -149,7 +151,7 @@ AUTHENTICATION_BACKENDS = [
 
 # Redirect users to the login page or any other page after logout
 LOGIN_URL = 'login'  # Name of your login URL pattern
-LOGIN_REDIRECT_URL = '/'  # Redirect to home page after login
+LOGIN_REDIRECT_URL = 'home'  # Redirect to home page after login
 LOGOUT_REDIRECT_URL = '/users/login/'  # Or any URL of your choice
 
 # Media Settings for Menu Items 

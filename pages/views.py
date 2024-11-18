@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from menu.models import MenuItem, Category
 
 
-# @login_required
+@login_required
 def home_view(request):
     # Fetching menu items
     discounted_items = MenuItem.objects.filter(available=True).order_by('-price')[:8]  # Example: Top 8 discounts

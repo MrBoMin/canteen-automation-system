@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block style_block %}
-    
+    <style>
+    .logout-button{
+        color: blue;
+    }
+    </style>
     {% endblock style_block %}
 </head>
 {% include "header.html" %}
