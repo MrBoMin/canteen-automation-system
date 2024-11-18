@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="../static/css/headstyle.css">
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        .table_body {
+            height: 215px;
+            font-size: 23px;
+        }
+        
+        th {
+            background-color: #0056b3;
+            color: white;
+            height: 95px;
+            font-size: 23px;
+        }
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        } */
+        
+        .cart-container {
+            width: 83%;
+            max-width: 1645px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-left: 10%;
+            margin-top: 100px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+        
+        .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .quantity button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+        }
+        
+        .quantity input {
+            text-align: center;
+            border: 1px solid #ddd;
+            height: 46px;
+            width: 100px;
+            border-radius: 50px;
+        }
+        
+        .image_column {
+            width: 250px;
+        }
+        
+        .description_column {
+            width: 415px;
+        }
+        
+        .price_column {
+            width: 230px;
+        }
+        
+        .quantity_column {
+            width: 243px;
+        }
+        
+        .total_column {
+            width: 249px;
+        }
+        
+        .remove-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 44px;
+            cursor: pointer;
+        }
+        
+        .cart-summary-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* background-color: #fff; */
+            padding: 20px 0px;
+            border-radius: 8px;
+            /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+            /* max-width: 960px; */
+            margin-top: 20px;
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .cart-summary-image {
+            width: 100%;
+            max-width: 50%;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+        
+        .cart-summary-image img {
+            width: 109%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .cart-summary-details {
+            width: 100%;
+            max-width: 43%;
+            background-color: #003366;
+            color: white;
+            padding: 20px 53px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+            height: 420px;
+            font-size: 25px;
+            height: 548px;
+        }
+        
+        .cart-summary-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .summary-details {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            line-height: 2.5;
+            border-top: 2px solid white;
+        }
+        
+        .summary-details li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        
+        .summary-details li:last-child {
+            border-bottom: none;
+            font-weight: bold;
+        }
+        
+        .checkout-btn {
+            background-color: #FFFFFF;
+            color: black;
+            border: none;
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 40px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bolder;
+            width: 100%;
+            height: 75px;
+        }
+        
+        .product-image {
+            width: 186px;
+            height: 186px;
+            object-fit: cover;
+        }
+        
+        .cart-container {
+            width: 83%;
+            max-width: 1645px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-left: 10%;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .cart-summary-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* background-color: #fff; */
+            padding: 20px 0px;
+            border-radius: 8px;
+            /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+            /* max-width: 960px; */
+            margin-top: 20px;
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .order-status-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* margin: 20px 0; */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 800px;
+        }
+        
+        .status-step {
+            text-align: center;
+            position: relative;
+            margin-top: 1%;
+        }
+        
+        .status-icon {
+            width: 90px;
+            height: 90px;
+            background-color: #28a745;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 24px;
+            margin: 0 auto;
+        }
+        
+        .status-line {
+            height: 4px;
+            width: 78px;
+            background-color: #28a745;
+            margin: -8px;
+        }
+        
+        .red {
+            background-color: #dc3545;
+            color: #dc3545;
+        }
+        
+        .status-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            /* margin-top: 8px; */
+            margin-bottom: 10px;
+        }
+        
+        .status-check {
+            color: #28a745;
+            font-size: 25px;
+            margin-top: 18px;
+        }
+        
+        .completed .status-icon {
+            background-color: #28a745;
+        }
+        
+        .pending .status-icon {
+            background-color: #dc3545;
+        }
+        
+        .pending .status-check {
+            color: #dc3545;
+        }
+        
+        .cart-summary-image img {
+            width: 109%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .cart-summary-details {
+            width: 100%;
+            max-width: 43%;
+            background-color: #003366;
+            color: white;
+            padding: 20px 53px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+            height: 420px;
+            font-size: 25px;
+            height: 548px;
+        }
+        
+        .cart-summary-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .summary-details {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            line-height: 2.5;
+            border-top: 2px solid white;
+        }
+        
+        .summary-details li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        
+        .summary-details li:last-child {
+            border-bottom: none;
+            font-weight: bold;
+        }
+        
+        .checkout-btn {
+            background-color: #FFFFFF;
+            color: black;
+            border: none;
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 40px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bolder;
+            width: 100%;
+            height: 75px;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-summary-container {
+                flex-direction: column;
+            }
+            .cart-summary-image,
+            .cart-summary-details {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Placeholder for Header -->
+    <div id="header-placeholder"></div>
+
+    <div class="cart-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th class="quantity_column">Quantity</th>
+                    <th class="total_column">Total</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <tr>
+                    <td class="table_body image_column"><img src="../static/image/4.jpeg" alt="Product Image" class="product-image"></td>
+                    <td class="table_bod table_body description_column">Fried Chicken</td>
+                    <td class="price table_body price_column">4500 MMK</td>
+                    <td class="table_body">
+                        1
+                    </td>
+                    <td class="table_body"><label class="item-total">4500</label> MMK</td>
+                </tr>
+                <!-- Repeat rows as needed -->
+                <tr>
+                    <td class="table_body image_column"><img src="../static/image/4.jpeg" alt="Product Image" class="product-image"></td>
+                    <td class="table_bod table_body description_column">Fried Chicken</td>
+                    <td class="price table_body price_column">4500 MMK</td>
+                    <td class="table_body">
+                        1
+                    </td>
+                    <td class="table_body"><label class="item-total">4500</label> MMK</td>
+                </tr>
+                <!-- Repeat rows as needed -->
+                <tr>
+                    <td class="table_body image_column"><img src="../static/image/4.jpeg" alt="Product Image" class="product-image"></td>
+                    <td class="table_bod table_body description_column">Fried Chicken</td>
+                    <td class="price table_body price_column">4500 MMK</td>
+                    <td class="table_body">
+                        1
+                    </td>
+                    <td class="table_body"><label class="item-total">4500</label> MMK</td>
+                </tr>
+                <!-- Repeat rows as needed -->
+                <tr>
+                    <td class="table_body image_column"><img src="../static/image/4.jpeg" alt="Product Image" class="product-image"></td>
+                    <td class="table_bod table_body description_column">Fried Chicken</td>
+                    <td class="price table_body price_column">4500 MMK</td>
+                    <td class="table_body">
+                        1
+                    </td>
+                    <td class="table_body"><label class="item-total">4500</label> MMK</td>
+                </tr>
+                <!-- Repeat rows as needed -->
+                <tr>
+                    <td class="table_body image_column"><img src="../static/image/4.jpeg" alt="Product Image" class="product-image"></td>
+                    <td class="table_bod table_body description_column">Fried Chicken</td>
+                    <td class="price table_body price_column">4500 MMK</td>
+                    <td class="table_body">
+                        1
+                    </td>
+                    <td class="table_body"><label class="item-total">4500</label> MMK</td>
+                </tr>
+                <!-- Repeat rows as needed -->
+            </tbody>
+        </table>
+
+        <div class="cart-summary-container">
+            <div class="order-status-tracker">
+                <div class="status-line"></div>
+                <div class="status-step completed">
+                    <div class="status-text">Received</div>
+                    <div class="status-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="status-check"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="status-line"></div>
+                <div class="status-line"></div>
+                <div class="status-step completed">
+                    <div class="status-text">Processing</div>
+                    <div class="status-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="status-check"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="status-line "></div>
+                <div class="status-line red"></div>
+                <div class="status-step pending">
+                    <div class="status-text">Delivering</div>
+                    <div class="status-icon"><i class="fas fa-truck"></i></div>
+                    <div class="status-check"><i class="fas fa-sync-alt"></i></div>
+                </div>
+                <div class="status-line red"></div>
+            </div>
+            <div class="cart-summary-details">
+                <div class="cart-summary-header">Total Cart (04)</div>
+                <ul class="summary-details">
+                    <li><span>Subtotal :</span><span id="subtotal">13000 MMK</span></li>
+                    <li><span>Delivery :</span><span>0 MMK</span></li>
+                    <li><span>Discount :</span><span>1000 MMK</span></li>
+                    <li style="border-top: 2px solid white;"><span>Total :</span><span id="total">12000 MMK</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
+
+
+
+    <script src="../static/js/headfoot.js"></script>
+
+</body>
+
+</html>

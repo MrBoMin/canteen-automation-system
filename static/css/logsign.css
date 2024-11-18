@@ -105,24 +105,6 @@ form input {
     font-size: 18px;
 }
 
-
-.forgot-password {
-    text-align: right;
-    margin-right: -90px;
-}
-
-.forgot-password a {
-    color: #5d9cec;
-    font-size: 17px; /* Increased font size */
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.forgot-password a:hover {
-    color: #0365e4;
-}
-
 .sign-in-button {
     width: 80%;
     padding: 15px; /* Increased padding */
@@ -133,7 +115,7 @@ form input {
     border-radius: 5px;
     cursor: pointer;
     border-radius: 50px;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: 40px;
     margin-bottom: 30px;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -165,93 +147,58 @@ form input {
     color: #0365e4;
 }
 
-/* Responsive Styling */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .left, .right {
-        width: 100%;
-        padding: 20px;
-    }
-
+@media (max-width: 2348px) and (min-width: 1880px) { /* Minimum zoom 80% */
     .image-placeholder {
-        width: 100%;
-        height: 400px;
+        width: 550px;
+        height: 700px;
     }
-
-    .description h2 {
-        font-size: 28px;
-    }
-
-    .description p {
-        font-size: 16px;
-    }
-
     .header h1 {
-        font-size: 36px;
-        margin-bottom: 50px;
+        font-size: 54px;
     }
-
-    .header h3 {
-        font-size: 20px;
-    }
-
-    form label {
-        font-size: 16px;
-        width: 100%;
-        margin-left: 0;
-    }
-
     form input {
         width: 100%;
         margin-left: 0;
-        padding: 12px;
+        margin-right: 0;
     }
+}
 
+@media (max-width: 1879px) and (min-width: 1254px) { /* Default zoom */
+    .image-placeholder {
+        width: 450px;
+        height: 650px;
+    }
+    .header h1 {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 1253px) and (min-width: 940px) { /* Zoom 150% */
+    .image-placeholder {
+        width: 350px;
+        height: 600px;
+    }
+    .header h1 {
+        font-size: 34px;
+    }
     .sign-in-button {
         width: 100%;
         margin-left: 0;
     }
-
-    .forgot-password {
-        margin-right: 0;
-        text-align: center;
-    }
-
-    .create-account p {
-        font-size: 16px;
-    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 939px) { /* Maximum zoom 200% */
+    .image-placeholder {
+        width: 300px;
+        height: 200px;
+    }
     .header h1 {
         font-size: 28px;
     }
-
-    .header h3 {
-        font-size: 18px;
+    .left, .right {
+        padding: 30px;
     }
-
-    .description h2 {
-        font-size: 24px;
-    }
-
-    .description p {
-        font-size: 14px;
-    }
-
-    form label, form input {
-        font-size: 14px;
-    }
-
     .sign-in-button {
-        font-size: 18px;
-        padding: 12px;
-    }
-
-    .create-account p {
-        font-size: 14px;
+        width: 100%;
+        margin-left: 0;
     }
 }

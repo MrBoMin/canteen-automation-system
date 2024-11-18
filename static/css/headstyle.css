@@ -30,7 +30,7 @@
     border-bottom-right-radius: 80px;
 }
 
-.contact-info a {
+.contact-info p {
     color: #ffffff;
     text-decoration: none;
 
@@ -212,6 +212,35 @@
     color: #020202;
 }
 
+.noti-dropdown-container {
+    position: relative;
+}
+
+/* Dropdown menu for Profile */
+.noti-dropdown {
+    align-items: center;
+    width: 300px;
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    backdrop-filter: blur(30px);
+    min-width: 120px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    left: 0;
+    z-index: 999;
+}
+
+.noti-dropdown-container:hover .noti-dropdown {
+    display: block;
+    opacity: 1;
+}
+
+
+/* Footer CSS */
 .footer {
     background-image: url('../image/5.jpg');
     background-size: cover;
@@ -244,6 +273,7 @@
     line-height: 1.8;
     font-size: 16px;
     padding-bottom: 2%;
+    transition: background-color 0.3s, color 0.3s;
 }
 .footer-section p{
     margin-left: 3%;
@@ -276,12 +306,8 @@
     font-weight: bold;
     margin-left: -55%;
 }
-.logo-f a{
+.logo-f p{
     font-size: 30px;
-    color: white;
-}
-
-.logo-f a:hover{
     color: white;
 }
 .footer-section .contactinfo {
@@ -295,4 +321,125 @@
     background-color: #0C1F3C;
     font-size: 14px;
     padding: 18px;
+}
+
+@media (max-width: 1024px) {
+    .header-nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .header-icons {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo-placeholder {
+        margin-bottom: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .header-icons {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .header-image img {
+        height: auto;
+        max-height: 250px;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section h3 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    .nav-links {
+        font-size: 0.9rem;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+
+    .cart-button, .profile-button, .noti-button {
+        padding: 0.4rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.2rem;
+    }
+
+    .header-nav {
+        padding: 1rem;
+    }
+
+    .header-icons {
+        gap: 1rem;
+    }
+
+    .footer-section p, .footer-section a, .footer-section li {
+        font-size: 0.9rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.8rem;
+    }
+} 
+
+@media (min-resolution: 80dpi) {
+    .footer-section p, .footer-section a, .footer-section li {
+        font-size: calc(1rem * (100% / 80%));
+    }
+}
+
+@media (max-resolution: 150dpi) {
+    .footer-section p, .footer-section a, .footer-section li {
+        font-size: calc(1rem * (100% / 150%));
+    }
 }

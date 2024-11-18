@@ -19,7 +19,7 @@ body {
     width: 100%;
 }
 
-h2 {
+.today-discounts h2 {
     display: flex;
     font-size: 1.5em;
     margin-bottom: 20px;
@@ -46,6 +46,8 @@ h2 {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-left: 6%;
+    width: 80%;
 }
 
 .discounts-container {
@@ -57,6 +59,7 @@ h2 {
 }
 
 .discount-card {
+    flex: 0 0 calc(25% - 30px); /* Ensure 4 cards fit in container with gap */
     display: flex;
     flex-direction: row;
     background-color: #fff;
@@ -128,7 +131,7 @@ h2 {
     font-size: 1.2em;
     cursor: pointer;
     right: 0;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all 0.3s;
 }
 .carousel-nav-buttons {
     display: flex;
@@ -145,21 +148,21 @@ h2 {
     height: auto;
 }
 
-.foot-section h1 {
+.food-section h1 {
     padding-top: 10px;
     text-align: left;
     padding-left: 80px;
     margin-bottom: 30px;
     color: #fffef9;
-  }
+}
   
-  .food-container {
+.food-container {
     padding: 10px 90px 20px 90px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 50px;
     height: 1040px;
-  }
+}
   
   .food-card {
     background-color: #fff;
@@ -187,6 +190,10 @@ h2 {
   .food-details .rating {
     font-size: 1em;
     color: #f8c312;
+  }
+
+  .rating span{
+    color: #000000;
   }
   
   .food-details .category {
@@ -216,6 +223,7 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
   
   .add-to-cart {
@@ -273,6 +281,17 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     text-align: left;
+}
+
+.card h2{
+    display: flex;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    width: 70%;
+    font-size: 20px;
+    font-weight: 100;
+    color: #333;
+    margin-left: 70px;
 }
 
 .tag {

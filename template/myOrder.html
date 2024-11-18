@@ -9,6 +9,113 @@
     <link rel="stylesheet" href="../static/css/headstyle.css">
     <link rel="stylesheet" href="../fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        .info-section {
+            padding: 0px;
+        }
+        
+        .info-section h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .info-section div {
+            margin-bottom: 15px;
+        }
+        
+        .info-section span {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .info-section input[type="password"] {
+            width: calc(100% - 160px);
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .chbtn {
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .chbtn .edit-btn {
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 4px;
+            border: none;
+            background-color: #0056b3;
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .order-table thead {
+            background-color: #f0f0f0;
+        }
+        
+        .order-table th,
+        .order-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #3f3f3f;
+            font-size: 0.95em;
+        }
+        
+        .order-table th {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .status {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .status.received {
+            color: #28a745;
+            /* Green */
+        }
+        
+        .status.processing {
+            color: #ff9800;
+            /* Orange */
+        }
+        
+        .status.delivering {
+            color: #007bff;
+            /* Blue */
+        }
+        
+        .view-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background-color: #00509e;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,32 +153,46 @@
         </div>
 
         <!-- Main Content -->
-        <div class="profile-main">
+        <div class="profile-main" style="height: 509px;margin-bottom: 95px;">
             <div class="header">
-                <h2>Personal Information</h2>
-                <a href="editinfouser.html" class="edit-btn">Edit</a>
+                <h2>My Order</h2>
             </div>
-            <div class="info-section">
-                <div>
-                    <span>Name :</span>
-                    <p>U Mya San</p>
-                </div>
-                <div>
-                    <span>Email :</span>
-                    <p>umyasan123@gmail.com</p>
-                </div>
-                <div>
-                    <span>Phone :</span>
-                    <p>09 333 22 4321</p>
-                </div>
-                <div>
-                    <span>Address :</span>
-                    <p>No1, Pyay Road, Thit Sar Street, Yangon</p>
-                </div>
-                <div>
-                    <span>Bio :</span>
-                    <p>Sar Nay B</p>
-                </div>
+            <div class="info-section" style="padding:0px;    height: 374px;">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#11111111</td>
+                            <td>7/11/2024</td>
+                            <td>25000 MMK</td>
+                            <td class="status received">Received</td>
+                            <td><a href="myOrderDetailView.html"><button class="view-btn">View</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>#11111112</td>
+                            <td>7/11/2024</td>
+                            <td>25000 MMK</td>
+                            <td class="status processing">Processing</td>
+                            <td><a href="myOrderDetailView.html"><button class="view-btn">View</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>#11111113</td>
+                            <td>7/11/2024</td>
+                            <td>25000 MMK</td>
+                            <td class="status delivering">Delivering</td>
+                            <td><a href="myOrderDetailView.html"><button class="view-btn">View</button></a></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -83,7 +204,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Dessert</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -102,7 +223,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Beef</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -120,7 +241,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Dessert</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -138,7 +259,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Dessert</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -156,7 +277,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Dessert</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -174,7 +295,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Dessert</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -192,7 +313,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Beef</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -210,79 +331,7 @@
                 <img src="../static/image/6.jpg" alt="Dish 2">
                 <div class="food-info">
                     <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
-                        <div class="category">Beef</div>
-                    </div>
-                    <h3>Fried Chicken</h3>
-                    <p class="price">5200 MMK</p>
-                    <div class="actionss">
-                        <button class="add-to-cart">Add to Cart</button>
-                        <div class="other-actions">
-                            <button><i class="fa-solid fa-heart"></i></button>
-                            <button><i class="fa-solid fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="food-card">
-                <img src="../static/image/6.jpg" alt="Dish 2">
-                <div class="food-info">
-                    <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
-                        <div class="category">Beef</div>
-                    </div>
-                    <h3>Fried Chicken</h3>
-                    <p class="price">5200 MMK</p>
-                    <div class="actionss">
-                        <button class="add-to-cart">Add to Cart</button>
-                        <div class="other-actions">
-                            <button><i class="fa-solid fa-heart"></i></button>
-                            <button><i class="fa-solid fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="food-card">
-                <img src="../static/image/6.jpg" alt="Dish 2">
-                <div class="food-info">
-                    <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
-                        <div class="category">Beef</div>
-                    </div>
-                    <h3>Fried Chicken</h3>
-                    <p class="price">5200 MMK</p>
-                    <div class="actionss">
-                        <button class="add-to-cart">Add to Cart</button>
-                        <div class="other-actions">
-                            <button><i class="fa-solid fa-heart"></i></button>
-                            <button><i class="fa-solid fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="food-card">
-                <img src="../static/image/6.jpg" alt="Dish 2">
-                <div class="food-info">
-                    <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
-                        <div class="category">Beef</div>
-                    </div>
-                    <h3>Fried Chicken</h3>
-                    <p class="price">5200 MMK</p>
-                    <div class="actionss">
-                        <button class="add-to-cart">Add to Cart</button>
-                        <div class="other-actions">
-                            <button><i class="fa-solid fa-heart"></i></button>
-                            <button><i class="fa-solid fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="food-card">
-                <img src="../static/image/6.jpg" alt="Dish 2">
-                <div class="food-info">
-                    <div class="food-details">
-                        <div class="rating">★★★★★ <span >4.5</span></div>
+                        <div class="rating">★★★★★ <span>4.5</span></div>
                         <div class="category">Beef</div>
                     </div>
                     <h3>Fried Chicken</h3>
@@ -390,82 +439,8 @@
             renderFoodCards();
             updatePagination();
         });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const foodCards = Array.from(document.querySelectorAll('.review')); // Select all food cards
-            const paginationContainer = document.querySelector('.pagination');
-            const itemsPerPage = 3; // Number of items per page
-        
-            let currentPage = 1;
-            const totalPages = Math.ceil(foodCards.length / itemsPerPage);
-        
-            // Function to render food cards for the current page
-            const renderFoodCards = () => {
-                // Hide all food cards initially
-                foodCards.forEach((card) => (card.style.display = 'none'));
-        
-                // Show only the items for the current page
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-        
-                foodCards.slice(start, end).forEach((card) => {
-                    card.style.display = 'block';
-                });
-            };
-        
-            // Function to update pagination buttons
-            const updatePagination = () => {
-                paginationContainer.innerHTML = ''; // Clear existing buttons
-        
-                // Left arrow
-                const prevButton = document.createElement('button');
-                prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(prevButton);
-        
-                // Numbered buttons
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = i;
-                    if (i === currentPage) {
-                        pageButton.classList.add('active');
-                    }
-                    pageButton.addEventListener('click', () => {
-                        currentPage = i;
-                        renderFoodCards();
-                        updatePagination();
-                    });
-                    paginationContainer.appendChild(pageButton);
-                }
-        
-                // Right arrow
-                const nextButton = document.createElement('button');
-                nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
-                nextButton.disabled = currentPage === totalPages;
-                nextButton.addEventListener('click', () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(nextButton);
-            };
-        
-            // Initialize the pagination
-            renderFoodCards();
-            updatePagination();
-        });
         
     </script>
-
 </body>
 
 </html>
