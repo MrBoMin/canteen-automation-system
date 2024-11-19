@@ -41,10 +41,17 @@
 
                         {% for item in menu_items %}
                         <div class="food-card">
-                            <img src="{{ item.photo.url }}" alt="{{ item.item_name }}">
+                        <a href="{% url 'menu:menu_detail' item.id %}"><img src="{{ item.photo.url }}" alt="{{ item.item_name }}"></a>
+                           
                             <div class="food-info">
                                 <div class="food-details">
-                                    <div class="rating">★★★★★ <span>4.5</span></div>
+                                    {# <div class="rating">{{  item.avg_rating|default:"No ratings yet" }}</div> #}
+                                    {% if item.avg_rating %}
+                                    <div class="rating"> Rating : {{item.avg_rating}} ★ </div>
+                                    
+                                    {% else %}
+                                    <div> No Rating yet </div>
+                                    {% endif %}
                                     <div class="category">{{ item.category.name }}</div>
                                 </div>
                                 <h3>{{ item.item_name }}</h3>
@@ -52,7 +59,7 @@
                                 <div class="actionss">
                                     <button class="add-to-cart" onclick="incrementCartCount()">Add to Cart</button>
                                     <div class="other-actions">
-                                        <button><i class="fa-solid fa-heart"></i></button>
+                                        {# <button><i class="fa-solid fa-heart"></i></button> #}
                                         <a href="{% url 'menu:menu_detail' item.id %}">
                                             <button><i class="fa-solid fa-eye"></i></button>
                                         </a>

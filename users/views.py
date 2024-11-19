@@ -4,6 +4,7 @@ from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password  
 from django.contrib import messages
+from menu.models import MenuItem,Favorite
 
 
 def login_view(request):
@@ -46,3 +47,18 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+
+
+def profile_view(request):
+    # Fetch favorite menu items directly using select_related to avoid N+1 problem
+    favorite_items = Favorite.objects.filter(user=request.user).select_related('menu_item')
+
+    # Extract menu items directly from the related Favorite objects
+    fav_items = [fav_item.menu_item for fav_item in favorite_items]
+
+    context = {
+        'favorite_items': fav_items,  # Pass a list of MenuItem objects to the template
+    }
+    return render(request, 'users/profile.html', context)

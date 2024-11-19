@@ -1,19 +1,69 @@
-from django.shortcuts import render,get_object_or_404
-from .models import MenuItem
+from django.shortcuts import render,get_object_or_404,redirect
+from .models import MenuItem, Favorite, Review
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg, Count 
 
 def menu_list_view(request):
-    all_menu_items = MenuItem.objects.all()
+    all_menu_items = MenuItem.objects.annotate(
+        avg_rating=Avg('reviews__rating'),
+        review_count=Count('reviews')
+    )
     return render(request, 'menu/menu.html', {'menu_items': all_menu_items})
 
 
-def menu_detail_view(request, pk): 
+def menu_detail_view(request, pk):
     menu_item = get_object_or_404(MenuItem, pk=pk)
+    reviews = Review.objects.filter(menu_item=menu_item).select_related('user')
+    is_favorite = (
+        request.user.is_authenticated and 
+        Favorite.objects.filter(user=request.user, menu_item=menu_item).exists()
+    )
+
+    context = {
+        'menu_item': menu_item,
+        'is_favorite': is_favorite,  # Add this to check favorite status
+        'reviews' : reviews,
+        'review_count': reviews.count()
+    }
+
+    return render(request, 'menu/menuDetail.html', context)
+
+
+def toggle_favorite(request, pk):
+    menu_item = get_object_or_404(MenuItem, pk=pk)
+    favorite, created = Favorite.objects.get_or_create(user=request.user, menu_item=menu_item)
+
+    if not created:
+        favorite.delete()
+    return redirect('menu:menu_detail', pk=pk)  
+
+
+
+@login_required
+def submit_review(request, pk):
+    menu_item = get_object_or_404(MenuItem, pk=pk)
+
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+
+        # Check if the user has already reviewed this menu item
+        existing_review = Review.objects.filter(user=request.user, menu_item=menu_item).first()
+
+        if existing_review:
+            # Update existing review
+            existing_review.rating = rating
+            existing_review.comment = comment
+            existing_review.save()
+        else:
+            # Create a new review
+            Review.objects.create(
+                user=request.user,
+                menu_item=menu_item,
+                rating=rating,
+                comment=comment
+            )
+
+        return redirect('menu:menu_detail', pk=pk)
+
     return render(request, 'menu/menuDetail.html', {'menu_item': menu_item})
-
-def footer_view(request):
-    return render(request, 'footer.html')
-
-
-def header_view(request):
-    return render(request, 'header.html')
-
