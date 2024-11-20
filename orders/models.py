@@ -23,9 +23,6 @@ class Order(models.Model):
         return f"Order #{self.id} - {self.user.username} - {self.get_status_display()}"
 
     def calculate_total_amount(self):
-        """
-        Calculates the total amount of the order by summing up the subtotals of all order items.
-        """
         self.total_amount = sum(item.subtotal for item in self.order_items.all())
         self.save()
 
@@ -47,5 +44,4 @@ class OrderItem(models.Model):
         """
         self.subtotal = self.price * self.quantity
         super().save(*args, **kwargs)
-        # Update the parent order's total amount whenever an order item is saved
         self.order.calculate_total_amount()

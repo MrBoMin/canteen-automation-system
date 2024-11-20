@@ -1,0 +1,13 @@
+<div class="cart-summary-details">
+    <div class="cart-summary-header">Total Cart ({{ order.order_items.count }})</div>
+    <ul class="summary-details">
+        <li><span>Subtotal :</span><span id="subtotal">{{ order.total_amount }} MMK</span></li>
+        <li><span>Delivery :</span><span>0 MMK</span></li>
+        <li><span>Discount :</span><span>1000 MMK</span></li>
+        <li style="border-top: 2px solid white;"><span>Total :</span><span id="total">{{
+                order.total_amount|floatformat:0 }} MMK</span></li>
+    </ul>
+    <a href="{% url 'order:checkout' %}">
+        <button class="checkout-btn">Process To Payment</button>
+    </a>
+</div>

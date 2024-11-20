@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('users/', include('users.urls')),
     path('menu/', include('menu.urls')),  # Include menu app URLs
+    path('orders/', include('orders.urls', namespace='orders')),
 ]
 
 

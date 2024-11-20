@@ -23,21 +23,23 @@
     </nav>
 
     <div class="header-icons">
+
         <div class="noti-dropdown-container">
             <a href="#" class="noti-button">
                 <i class="fas fa-bell"></i>
-                <span class="cart-count">00</span>
+                <span class="cart-count">0</span>
             </a>
             <div class="noti-dropdown">
-                <p>1. Your Order has been recieved.</p>
-                <p>2. Your Order has been recieved.</p>
-                <p>3. Your Order has been recieved.</p>
+                <p>1. Your Order has been received.</p>
+                <p>2. Your Order has been received.</p>
+                <p>3. Your Order has been received.</p>
             </div>
         </div>
-        <a href="cartDetaill.html" class="cart-button">
+        <a href="{% url 'orders:cart' %}" class="cart-button">
             <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count" class="cart-count">00</span>
+            <span id="cart-count" class="cart-count">{{ cart_count|default:"0" }}</span>
         </a>
+ 
         <div class="profile-dropdown-container">
             <a href="#" class="profile-button">
                 <i class="fas fa-user"></i>
