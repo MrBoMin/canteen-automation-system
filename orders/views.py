@@ -1,120 +1,157 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Order, OrderItem
+from .models import Order, OrderItem, Cart,CartItem
 from menu.models import MenuItem
-
-# def create_order_view(request):
-#     user = request.user
-#     order = Order.objects.create(user=user, status='Pending', total_amount=50.00)
-#     return render(request, 'orders/order_created.html', {'order': order}) 
+from django.db.models import Sum
+import json
 
 
 @login_required
 def add_to_cart(request, item_id):
     menu_item = get_object_or_404(MenuItem, id=item_id)
 
-    # Check if the item is in stock
     if menu_item.stock < 1:
         return JsonResponse({'message': 'This item is out of stock!', 'cart_count': 0}, status=400)
 
-    # Check if there is an open order for this user
-    order, created = Order.objects.get_or_create(user=request.user, status="Pending")
+    # Get or create the user's cart
+    cart, created = Cart.objects.get_or_create(user=request.user)
 
-    # Check if the order item is already in the cart
-    order_item, created = OrderItem.objects.get_or_create(
-        order=order,
+    # Add or update the cart item
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart,
         item=menu_item,
+        user=request.user,
         defaults={'price': menu_item.price, 'quantity': 1}
     )
 
     if not created:
-        # If the item is already in the cart, check stock before increasing quantity
-        if menu_item.stock >= order_item.quantity + 1:
-            order_item.quantity += 1
-            order_item.save()
+        if menu_item.stock >= cart_item.quantity + 1:
+            cart_item.quantity += 1
+            cart_item.save()
         else:
-            return JsonResponse({'message': 'Not enough stock available!', 'cart_count': order.order_items.count()}, status=400)
+            return JsonResponse({'message': 'Not enough stock available!', 'cart_count': cart.cart_items.count()}, status=400)
 
-    return JsonResponse({'message': 'Item added to cart successfully', 'cart_count': order.order_items.count()})
-
+    return JsonResponse({'message': 'Item added to cart successfully', 'cart_count': cart.cart_items.count()})
 
 
 @login_required
 def cart_view(request):
-    # Fetch the user's cart
-    try:
-        order = Order.objects.get(user=request.user, status='Pending')
-        order_items = order.order_items.select_related('item')
-    except Order.DoesNotExist:
-        order = None
-        order_items = []
-
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    total_amount = sum(item.price * item.quantity for item in cart.cart_items.all())
     context = {
-        'order': order,
-        'order_items': order_items,
+        'cart': cart,
+        'cart_items': cart.cart_items.all(),
+        'total_amount': total_amount
     }
     return render(request, 'orders/cart.html', context)
 
+
 @login_required
-def checkout_view(request):
+def make_order(request):
     try:
-        order = Order.objects.get(user=request.user, status='Pending')
-        order.status = 'Confirmed'  # Update the status
-        order.save()
-        # Reduce stock for each order item
-        for item in order.order_items.all():
-            menu_item = item.item
-            menu_item.stock -= item.quantity
-            menu_item.save()
-        return redirect('orders:order_summary')
-    except Order.DoesNotExist:
-        return redirect('orders:cart')
+        cart_items = CartItem.objects.filter(user=request.user)
+        if not cart_items.exists():
+            return redirect('orders:cart')  # Redirect to cart if empty
+
+        # Create a new order
+        order = Order.objects.create(user=request.user, status='Pending')
+
+        for cart_item in cart_items:
+            # Create order items and deduct stock
+            OrderItem.objects.create(
+                order=order,
+                item=cart_item.item,
+                price=cart_item.item.price,
+                quantity=cart_item.quantity
+            )
+            cart_item.item.stock -= cart_item.quantity
+            cart_item.item.save()
+
+        # Clear the cart
+        cart_items.delete()
+
+        return redirect(reverse('orders:order_summary', kwargs={'order_id': order.id}))
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+
+# @login_required
+# def checkout_view(request):
+#     try:
+#         order = Order.objects.get(user=request.user, status='Pending')
+#         order.status = 'Confirmed'  # Update the status
+#         order.save()
+#         # Reduce stock for each order item
+#         for item in order.order_items.all():
+#             menu_item = item.item
+#             menu_item.stock -= item.quantity
+#             menu_item.save()
+#         return redirect('orders:order_summary')
+#     except Order.DoesNotExist:
+#         return redirect('orders:cart')
+
+
 
 
 @login_required
-def order_summary_view(request):
-    orders = Order.objects.filter(user=request.user).exclude(status='Pending')
-    return render(request, 'order/summary.html', {'orders': orders})
+def order_summary_view(request, order_id):
+    print(order_id)
+    # Fetch the specific order using the order_id and ensure it belongs to the logged-in user
+    order = Order.objects.filter(user=request.user, id=order_id).first()
+    
+    if not order:
+        # Handle case when no matching order is found, or return a 404
+        return render(request, 'orders/order_not_found.html')
 
-import json
+    # Calculate the total amount for this specific order
+    order.calculate_total_amount()
 
-@login_required
+    return render(request, 'orders/summary.html', {'order': order})
+
+
 @login_required
 def update_cart_item(request, item_id):
     if request.method == 'POST':
         try:
-            # Parse JSON data
+            # Parse JSON data from the request
             data = json.loads(request.body)
             action = data.get('action')
+            if action not in ['increase', 'decrease']:
+                return JsonResponse({"error": "Invalid action"}, status=400)
 
-            # Fetch the specific order item
-            order_item = OrderItem.objects.get(id=item_id, order__user=request.user, order__status='Pending')
+            # Fetch the specific cart item
+            cart_item = CartItem.objects.get(id=item_id, user=request.user)
 
-            # Update quantity based on the action
+            # Perform the action (increase or decrease quantity)
             if action == 'increase':
-                if order_item.item.stock > order_item.quantity:  # Check stock availability
-                    order_item.quantity += 1
+                if cart_item.item.stock > cart_item.quantity:  # Check stock availability
+                    cart_item.quantity += 1
+                else:
+                    return JsonResponse({"error": "Not enough stock available!"}, status=400)
             elif action == 'decrease':
-                if order_item.quantity > 1:  # Ensure quantity doesn't drop below 1
-                    order_item.quantity -= 1
+                if cart_item.quantity > 1:  # Ensure quantity doesn't drop below 1
+                    cart_item.quantity -= 1
+                else:
+                    return JsonResponse({"error": "Quantity cannot be less than 1"}, status=400)
 
-            # Save changes and update subtotal
-            order_item.save()
+            # Save changes to the cart item
+            cart_item.save()
 
-            # Recalculate totals for the entire order
-            order = order_item.order
-            subtotal_all = sum(item.subtotal for item in order.order_items.all())
+            # Recalculate totals for the entire cart
+            subtotal_all = sum(item.subtotal for item in CartItem.objects.filter(user=request.user))
 
             return JsonResponse({
-                "quantity": order_item.quantity,
-                "subtotal": f"{order_item.subtotal:.2f}",
+                "quantity": cart_item.quantity,
+                "subtotal": f"{cart_item.subtotal:.2f}",
                 "subtotal_all": f"{subtotal_all:.2f}",
-                "total_all": f"{subtotal_all:.2f}",  # Total matches the subtotal
+                "total_all": f"{subtotal_all:.2f}",
             })
 
-        except OrderItem.DoesNotExist:
-            return JsonResponse({"error": "Item not found"}, status=404)
+        except CartItem.DoesNotExist:
+            return JsonResponse({"error": "Item not found in your cart"}, status=404)
 
     return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -123,9 +160,23 @@ def update_cart_item(request, item_id):
 def remove_cart_item(request, item_id):
     if request.method == 'POST':
         try:
-            order_item = OrderItem.objects.get(id=item_id, order__user=request.user, order__status='Pending')
-            order_item.delete()
-            return redirect('orders:cart')
+            # Fetch the order item and related order
+            cart_item = CartItem.objects.get(id=item_id, cart__user=request.user)
+            cart = cart_item.cart
+
+            # Remove the item
+            cart_item.delete()
+
+            # Recalculate totals for the order
+            subtotal_all = sum(item.subtotal for item in cart.cart_items.all())
+            total_all = subtotal_all  # Assuming no additional fees or discounts
+
+            return JsonResponse({
+                "message": "Item removed successfully",
+                "subtotal_all": f"{subtotal_all:.2f}",
+                "total_all": f"{total_all:.2f}",
+                "cart_count": cart.cart_items.count()
+            })
         except OrderItem.DoesNotExist:
-            return JsonResponse({'error': 'Item not found'}, status=404)
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+            return JsonResponse({"error": "Item not found"}, status=404)
+    return JsonResponse({"error": "Invalid request"}, status=400)

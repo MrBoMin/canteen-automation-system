@@ -1,4 +1,4 @@
-from .models import Order
+from .models import Cart
 
 def cart_count(request):
     """
@@ -6,8 +6,8 @@ def cart_count(request):
     """
     if request.user.is_authenticated:
         try:
-            order = Order.objects.get(user=request.user, status='Pending')
-            return {'cart_count': order.order_items.count()}
-        except Order.DoesNotExist:
+            cart = Cart.objects.get(user=request.user)
+            return {'cart_count': cart.cart_items.count()}
+        except Cart.DoesNotExist:
             return {'cart_count': 0}
     return {'cart_count': 0}

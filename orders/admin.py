@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Order, OrderItem
 from notification.models import Notification  # Import the Notification model
 
+admin.site.register(OrderItem)
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'status', 'total_amount', 'order_date')  # Changed 'created_at' to 'order_date'
@@ -37,3 +39,5 @@ class OrderAdmin(admin.ModelAdmin):
             )
         self.message_user(request, "Selected orders have been marked as Ready to Pickup.")
     mark_as_ready_to_pickup.short_description = "Mark selected orders as Ready to Pickup"
+
+
