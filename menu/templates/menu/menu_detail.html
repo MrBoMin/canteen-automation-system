@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Menu Image Section -->
+        <div class="col-lg-6 item-pho-box">
+            <img src="{{menu_item.photo.url}}" alt="Menu Item" class="img-fluid rounded item-pho">
+           
+        </div>
+
+        <!-- Menu Info Section -->
+        <div class="col-lg-6">
+            <h1>{{menu_item.item_name}}</h1>
+            <p class="price">
+               $ {{menu_item.price}}
+            </p>
+            <div class="d-flex align-items-center mb-3 stock">
+                Stock : {{menu_item.stock}}
+            </div>
+            <p class="text-muted">
+            {{menu_item.description}}
+            </p>
+
+            <!-- Quantity Selection -->
+           
+
+            <!-- Action Buttons -->
+            
+        
+
+            <div class="product-actions d-flex  gap-3" style="margin-top: 48px;">
+            
+                <button class="atc" style="margin-right: 12px;" onclick="addToCart({{ menu_item.pk }})">Add to Cart <i class="fa-solid fa-cart-shopping"></i></button>
+            
+                <form method="post" action="{% url 'menu:toggle_favorite' menu_item.pk %}">
+                    {% csrf_token %}
+                    {% if is_favorite %}
+                    <button type="submit" class="btn-fav">Remove from Favorites ❤️</button>
+                    {% else %}
+                    <button type="submit" class="btn-fav-before">Add to Favorites 🤍</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="mt-5">
+        <div class="container py-5">
+            <div class="row">
+                <!-- Reviews Section -->
+                <div class="col-lg-8">
+                    <h4 class="mb-4 fw-bold">Reviews</h4>
+                    <h6 class="text-muted mb-3">{{ reviews|length }} Reviews</h6>
+                    <div class="p-4 bg-light rounded">
+                        {% for review in reviews %}
+                        
+                        <div class="d-flex align-items-start mb-4 border-bottom pb-3">
+                            <img src="{{ review.user.profile_picture.url }}" alt="User" class="rounded-circle"
+                                style="width: 60px; height: 60px; object-fit: cover; border: 2px solid #ddd; margin-right: 10px !important">
+                            <div class="ms-3 w-100">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">{{ review.user.username }}</h6>
+                                    <small class="text-muted">{{ review.created_at|date:"d M Y" }}</small>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="text-warning me-2">{{ review.rating }} ★</span>
+                                </div>
+                                <p class="text-muted mb-0">{{ review.comment }}</p>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-center text-muted">No reviews yet. Be the first to review!</p>
+                        {% endfor %}
+                    </div>
+
+                
+                </div>
+        
+                <!-- Review Form Section -->
+                <div class="col-lg-4">
+                    <h4 class="mb-4 fw-bold">Write a Review</h4>
+                    <div class="p-4 bg-light rounded">
+                        <form method="post" action="{% url 'menu:submit_review' menu_item.pk %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <select name="rating" id="rating" class="form-select" required>
+                                    <option value="">Select Rating</option>
+                                    {% for i in "12345" %}
+                                    <option value="{{ i }}">{{ i }} Stars</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Your Review</label>
+                                <textarea name="comment" id="comment" class="form-control" rows="4"
+                                    placeholder="Write your review here..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-100 atc">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+        function addToCart(itemId) {
+            fetch(`/orders/cart/add/${itemId}/`, {  // Updated to point to 'order' app
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                    }
+                    // Update cart count dynamically
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                });
+    }
+</script>
+
+{% endblock main %}
+

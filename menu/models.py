@@ -8,6 +8,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 class MenuItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='menu_items', default=1)
     item_name = models.CharField(max_length=100)
@@ -17,13 +20,14 @@ class MenuItem(models.Model):
     photo = models.ImageField(upload_to='menu_photos/', blank=True, null=True)
     stock = models.PositiveIntegerField(default=0, verbose_name=_("Stock"))
     restock_level = models.PositiveIntegerField(default=10, verbose_name=_("Restock Level"))  # Threshold to trigger restock
+    created_at = models.DateTimeField(auto_now_add=True)  # Field to store creation time
 
     def __str__(self):
         return self.item_name
 
     def is_restock_needed(self):
         return self.stock <= self.restock_level
-    
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favorites')

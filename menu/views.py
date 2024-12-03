@@ -1,14 +1,27 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import MenuItem, Favorite, Review
+from .models import MenuItem, Favorite, Review, Category
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count 
 
+from django.shortcuts import render
+from .models import MenuItem, Category
+
 def menu_list_view(request):
-    all_menu_items = MenuItem.objects.annotate(
-        avg_rating=Avg('reviews__rating'),
-        review_count=Count('reviews')
-    )
-    return render(request, 'menu/menu.html', {'menu_items': all_menu_items})
+    search_query = request.GET.get('q', '')  # Get the search term from the query string
+    categories = Category.objects.all()
+
+    if search_query:
+        menu_items = MenuItem.objects.filter(item_name__icontains=search_query)
+    else:
+        menu_items = MenuItem.objects.all()
+
+    context = {
+        'menu_items': menu_items,
+        'categories': categories,
+        'search_query': search_query,  # Pass the current search term to the template
+    }
+    return render(request, 'menu/menu.html', context)
+
 
 
 def menu_detail_view(request, pk):
@@ -26,7 +39,7 @@ def menu_detail_view(request, pk):
         'review_count': reviews.count()
     }
 
-    return render(request, 'menu/menuDetail.html', context)
+    return render(request, 'menu/menu_detail.html', context)
 
 
 def toggle_favorite(request, pk):

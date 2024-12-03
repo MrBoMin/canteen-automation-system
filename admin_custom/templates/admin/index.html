@@ -1,0 +1,25 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<!-- Include the existing admin content -->
+{{ block.super }}
+
+<!-- Add your custom sections here -->
+<div class="custom-dashboard-sections">
+    <div style="margin-top: 30px;">
+        <h2>Total Revenue</h2>
+        <p>{{ total_revenue }} MMK</p>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h3>Recent Orders</h3>
+        <ul>
+            {% for order in recent_orders %}
+            <li>
+                Order #{{ order.id }}: {{ order.total_amount }} MMK - {{ order.order_date }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

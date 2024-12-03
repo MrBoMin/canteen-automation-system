@@ -1,4 +1,6 @@
 from .models import Cart
+from notification.models import Notification
+
 
 def cart_count(request):
     """
@@ -11,3 +13,15 @@ def cart_count(request):
         except Cart.DoesNotExist:
             return {'cart_count': 0}
     return {'cart_count': 0}
+
+
+
+
+def base_view(request):
+    notifications = []
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user, status='Unread').order_by('-created_at')[:5]
+    
+    return {
+        'notifications': notifications
+    }

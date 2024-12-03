@@ -7,6 +7,11 @@ from menu.models import MenuItem
 from django.db.models import Sum
 import json
 
+from django.shortcuts import render
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Order
+
+
 
 @login_required
 def add_to_cart(request, item_id):
@@ -180,3 +185,7 @@ def remove_cart_item(request, item_id):
         except OrderItem.DoesNotExist:
             return JsonResponse({"error": "Item not found"}, status=404)
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+
+

@@ -23,15 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-cc=nk3iw=-f3g#7ub7&^7%*+)319xpm+zg%r)abx5l*he$hlzz'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
-
+DEBUG = True  # Disable debug mode in production
+ALLOWED_HOSTS = ['*']  # Make sure to specify allowed hosts for production
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'grappelli',
+    # 'unfold',
+    'django_daisy',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,10 +46,11 @@ INSTALLED_APPS = [
     'payments',
     'inventory',
     'notification',
-    'mathfilters'
+    'admin_custom',
 ]
 
 MIDDLEWARE = [
+   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+
+    
 ]
 
 
@@ -72,7 +77,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'orders.context_processors.cart_count'
+                'orders.context_processors.cart_count',
+                'orders.context_processors.base_view',
+                'admin_custom.context_processors.admin_dashboard_data'
             ],
         },
     },
@@ -133,12 +140,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 
-# Static files settings
 STATIC_URL = '/static/'
 
+# If you have custom static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'canteen_automation' / 'static',  
+    BASE_DIR / "static",  # Your custom static files
 ]
+
+# The location where `collectstatic` will collect files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -160,3 +171,26 @@ LOGOUT_REDIRECT_URL = '/users/login/'  # Or any URL of your choice
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+# settings.py
+
+APPS_REORDER = {
+    "Inventory": ["Inventorys"],
+    "Menu": ["Categorys", "Menu items", "Reviews"],
+    "Notification": ["Notifications"],
+    "Orders": ["Orders"],
+    "Payments": ["Payments"],
+    "Users": ["Roles", "Users"],
+}
+
+
+ADMIN_MENU_ORDER = [
+    {"label": "Menu", "models": ["menu.Category", "menu.MenuItem", "menu.Review"]},
+    {"label": "Notification", "models": ["notification.Notification"]},
+    {"label": "Orders", "models": ["orders.Order"]},
+    {"label": "Payments", "models": ["payments.Payment"]},
+    {"label": "Users", "models": ["users.User"]},
+]

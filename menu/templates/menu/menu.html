@@ -1,167 +1,69 @@
 {% extends "base.html" %}
-{% block title %}Menu{% endblock title %}
-{% block content %}
-<div class="list-btn">
-    <button id="toggleButton"><i class="fa-solid fa-list"></i></button>
-</div>
-<div class="side-container" id="sideContainer">
-    <h3 class="container-title">Categories</h3>
-    <button id="closeButton"><i class="fa-solid fa-list"></i></button>
-    <ul class="container-links">
-        <li><a href="#snack">Snack</a></li>
-        <li><a href="#drink">Drink</a></li>
-        <li><a href="#cafe">Cafe</a></li>
-        <li><a href="#noodle">Noodle</a></li>
-        <li><a href="#rice">Rice</a></li>
-        <li><a href="#fish">Fish</a></li>
-        <li><a href="#vegetable">Vegetable</a></li>
-        <li><a href="#beef">Beef</a></li>
-        <li><a href="#chicken">Chicken</a></li>
-    </ul>
-</div>
-<section class="food-section2">
-    <div class="search-bar">
-        <input type="text" placeholder="search...">
-        <select>
-            <option>Default Sorting</option>
-            <option>Beef</option>
-            <option>Snack</option>
-            <option>Dessert</option>
-            <option>Chicken</option>
-            <option>Cafe</option>
-            <option>Drink</option>
-            <option>Noodle</option>
-            <option>Rice</option>
-            <option>Fish</option>
-            <option>Vegetable</option>
-        </select>
-        <button>Search</button>
-    </div>
-    <div class="food-container2">
+{% block style_block %}
+<style>
 
-        {% for item in menu_items %}
-        <div class="food-card">
-            <a href="{% url 'menu:menu_detail' item.id %}"><img src="{{ item.photo.url }}"
-                    alt="{{ item.item_name }}"></a>
 
-            <div class="food-info">
-                <div class="food-details">
-                    {# <div class="rating">{{ item.avg_rating|default:"No ratings yet" }}</div> #}
-                    {% if item.avg_rating %}
-                    <div class="rating"> Rating : {{item.avg_rating}} ★ </div>
 
-                    {% else %}
-                    <div> No Rating yet </div>
-                    {% endif %}
-                    <div class="category">{{ item.category.name }}</div>
-                </div>
-                <h3>{{ item.item_name }}</h3>
-                <p class="price"> $ {{ item.price }}</p>
-                <div class="actionss">
-                    <button onclick="addToCart({{ item.id }})" class="add-to-cart">Add to Cart</button>
-                    <div class="other-actions">
-                        {# <button><i class="fa-solid fa-heart"></i></button> #}
-                        <a href="{% url 'menu:menu_detail' item.id %}">
-                            <button><i class="fa-solid fa-eye"></i></button>
-                        </a>
+</style>
+{% endblock style_block %}
+{% block main %}
+<section class="food_section layout_padding-bottom mt-5">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Our Menu
+            </h2>
+        </div>
+
+        <!-- Search Form -->
+        <form method="get" action="{% url 'menu:menu_list' %}" class="mb-4 mt-4">
+            <input type="text" name="q" class="form-control" placeholder="Search for menu items..."
+                value="{{ request.GET.q|default:'' }}">
+        </form>
+
+        <ul class="filters_menu">
+            <li class="active" data-filter="*">All</li>
+            {% for category in categories %}
+            <li data-filter=".{{ category.name|slugify }}">{{ category.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="filters-content">
+            <div class="row grid">
+                {% for item in menu_items %}
+                <div class="col-sm-6 col-lg-4 all {{ item.category.name|slugify }}">
+                    <div class="box">
+                        <div>
+                            <div class="img-box">
+                                <a href="{% url 'menu:menu_detail' item.id %}"><img src="{{ item.photo.url }}"
+                                        alt="{{ item.item_name }}"></a>
+                            </div>
+                            <div class="detail-box">
+                                <h5>{{ item.item_name }}</h5>
+                                <p>{{ item.description }}</p>
+                                <div class="options">
+                                    <h6>
+                                        ${{ item.price }}
+                                        <span class="{% if item.stock > 0 %} text-success {% else %} text-danger {% endif %}">
+                                            {% if item.stock > 0 %}
+                                             : Available
+                                            {% else %}
+                                             : Not Available
+                                            {% endif %}
+                                        </span>
+                                    </h6>
+                                    <button onclick="addToCart({{ item.id }})" class="atc"> <i class="fa-solid fa-cart-shopping"></i> </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
-
-
-        <!-- More food cards as needed -->
-    </div>
-    <!-- Pagination -->
-    <div class="pagination">
-        <button><i class="fa-solid fa-arrow-left"></i></button>
-        <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button><i class="fa-solid fa-arrow-right"></i></button>
     </div>
 </section>
-{% endblock content %}
-
-{% block script_block %}
-
 <script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const foodCards = Array.from(document.querySelectorAll('.food-card')); // Select all food cards
-        const paginationContainer = document.querySelector('.pagination');
-        const itemsPerPage = 12; // Number of items per page
-
-        let currentPage = 1;
-        const totalPages = Math.ceil(foodCards.length / itemsPerPage);
-
-        // Function to render food cards for the current page
-        const renderFoodCards = () => {
-            // Hide all food cards initially
-            foodCards.forEach((card) => (card.style.display = 'none'));
-
-            // Show only the items for the current page
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-
-            foodCards.slice(start, end).forEach((card) => {
-                card.style.display = 'block';
-            });
-        };
-
-        // Function to update pagination buttons
-        const updatePagination = () => {
-            paginationContainer.innerHTML = ''; // Clear existing buttons
-
-            // Left arrow
-            const prevButton = document.createElement('button');
-            prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
-            prevButton.disabled = currentPage === 1;
-            prevButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderFoodCards();
-                    updatePagination();
-                }
-            });
-            paginationContainer.appendChild(prevButton);
-
-            // Numbered buttons
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.textContent = i;
-                if (i === currentPage) {
-                    pageButton.classList.add('active');
-                }
-                pageButton.addEventListener('click', () => {
-                    currentPage = i;
-                    renderFoodCards();
-                    updatePagination();
-                });
-                paginationContainer.appendChild(pageButton);
-            }
-
-            // Right arrow
-            const nextButton = document.createElement('button');
-            nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
-            nextButton.disabled = currentPage === totalPages;
-            nextButton.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderFoodCards();
-                    updatePagination();
-                }
-            });
-            paginationContainer.appendChild(nextButton);
-        };
-
-        // Initialize the pagination
-        renderFoodCards();
-        updatePagination();
-    });
-
 
     function addToCart(itemId) {
         fetch(`/orders/cart/add/${itemId}/`, {  // Updated to point to 'order' app
@@ -181,7 +83,6 @@
                 document.getElementById('cart-count').textContent = data.cart_count;
             });
     }
-
-
 </script>
-{% endblock script_block %}
+{% endblock main %}
+

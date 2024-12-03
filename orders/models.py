@@ -48,8 +48,15 @@ class Order(models.Model):
         ('Cancelled', 'Cancelled'),
     ]
 
+    PAYMENT_CHOICES = (
+        ('Cash on Pickup', 'Cash on Pickup'),
+        ('Card Payment', 'Card Payment'),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    payment_method = models.CharField(choices=PAYMENT_CHOICES, max_length=20, null=True, blank=True)
+    payment_status = models.BooleanField(default=False)  # False = not paid, True = paid
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     order_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

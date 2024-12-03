@@ -2,7 +2,14 @@ from django.contrib import admin
 from .models import MenuItem, Category, Review
 
 admin.site.register(Category)
-admin.site.register(MenuItem)
+
+
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ('item_name', 'price', 'category','stock')  # Removed is_available
+    list_filter = ('category',)  # Removed is_available
+    search_fields = ('item_name', 'category__name')
+    ordering = ('item_name',)
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

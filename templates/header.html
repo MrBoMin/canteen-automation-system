@@ -25,21 +25,18 @@
     <div class="header-icons">
 
         <div class="noti-dropdown-container">
-            <a href="#" class="noti-button">
+            <a href="#" class="noti-button" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                 <i class="fas fa-bell"></i>
-                <span class="cart-count">0</span>
+                <span class="cart-count">{{ notifications|length }}</span>
             </a>
-            <div class="noti-dropdown">
-                <p>1. Your Order has been received.</p>
-                <p>2. Your Order has been received.</p>
-                <p>3. Your Order has been received.</p>
-            </div>
         </div>
+
+
         <a href="{% url 'orders:cart' %}" class="cart-button">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count" class="cart-count">{{ cart_count|default:"0" }}</span>
         </a>
- 
+
         <div class="profile-dropdown-container">
             <a href="#" class="profile-button">
                 <i class="fas fa-user"></i>
@@ -50,10 +47,11 @@
                 <a href="myOrderHistoryDetailView.html">Order Detail</a>
                 <a href="myOrderHistory.html">Order History</a>
                 <a class="logout-button">
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form></a> 
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </a>
             </div>
         </div>
     </div>
@@ -65,5 +63,49 @@
     <img src=" {% static 'image/4.jpeg' %}" alt="Menu Image">
     <div class="page-title">
         <h1>Fresh Corner</h1>
+    </div>
+</div>
+
+
+<!-- Notifications Modal -->
+<div id="notificationsModal" class="modal fade" tabindex="-1" aria-labelledby="notificationsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if notifications %}
+                <ul class="list-group">
+                    {% for notification in notifications %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            <p>{{ notification.message }}</p>
+                            <small class="text-muted">{{ notification.created_at|date:"M d, Y H:i" }}</small>
+                        </div>
+                    {% if notification.order %}
+                    <a href="{% url 'orders:order_summary' notification.order.id %}" class="btn btn-sm btn-primary">View</a>
+                    {% else %}
+                    <span class="text-muted">No associated order</span>
+                    {% endif %}
+
+
+
+
+
+
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center text-muted">No new notifications.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>

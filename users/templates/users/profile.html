@@ -1,260 +1,204 @@
 {% extends "base.html" %}
-{% block title %}
-Profile
-{% endblock title %}Profile
-{% block content %}
-    <div class="profile-container">
+{% block main %}
+<div class="container my-5">
+    <div class="row mb-4">
         <!-- Sidebar -->
-        <div class="profile-sidebar">
-            <img src="{{user.profile_picture.url}}" alt="User Photo">
-            <h3>U Mya San</h3>
-            <p>Sar Nay B</p>
-            <ul>
-                <li>
-                    <span class="icon-box"><i class="fas fa-user"></i></span>
-                    <a href="profile.html">Personal Info</a>
-                </li>
-                <li>
-                    <span class="icon-box"><i class="fas fa-shopping-cart"></i></span>
-                    <a href="myOrder.html">My Order</a>
-                </li>
-                <li>
-                    <span class="icon-box"><i class="fas fa-history"></i></span>
-                    <a href="myOrderHistory.html">Order History</a>
-                </li>
-                <li>
-                    <span class="icon-box"><i class="fas fa-key"></i></span>
-                    <a href="chagepassword.html">Change Password</a>
-                </li>
-                <li>
-                    <span class="icon-box"><i class="fas fa-sign-out-alt"></i></span>
-                    <a href="Login.html">Logout</a>
-                </li>
-            </ul>
+        <div class="col-md-4">
+            <div class="card text-center profile-card">
+                <div class="card-body">
+<img src="{{ user.profile_picture.url }}" alt="User Photo" class="rounded-circle border img-fluid mb-3"
+    style="width: 150px; height: 150px; object-fit: cover;">
+                       
+                    <h3 class="card-title">{{ user.username }}</h3>
+                    <p class="text-muted">{{ user.bio }}</p>
+                    <ul class="list-group">
+                        <li class="list-group-item profile-li">
+                            <a href="{% url 'profile' %}" class="text-decoration-none">
+                                <i class="fas fa-user me-2"></i> Personal Info
+                            </a>
+                        </li>
+                        <li class="list-group-item profile-li">
+                            <a href="{% url 'my_orders' %}" class="text-decoration-none">
+                                <i class="fas fa-shopping-cart me-2"></i> My Orders
+                            </a>
+                        </li>
+                        <li class="list-group-item profile-li">
+                            <a href="{% url 'order-history' %}" class="text-decoration-none">
+                                <i class="fas fa-history me-2"></i> Order History
+                            </a>
+                        </li>
+                        <li class="list-group-item profile-li">
+                            <a href="{% url 'change_password' %}" class="text-decoration-none">
+                                <i class="fas fa-key me-2"></i> Change Password
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link text-decoration-none text-danger">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
         </div>
-    
+
         <!-- Main Content -->
-        <div class="profile-main">
-            <div class="header">
-                <h2>Personal Information</h2>
-                <a href="editinfouser.html" class="edit-btn">Edit</a>
-            </div>
-            <div class="info-section">
-                <div>
-                    <span>Name :</span>
-                    <p> {{user.username}} </p>
+        <div class="col-md-8">
+            {% if form %}
+            <!-- Edit Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Edit Personal Information</h2>
                 </div>
-                <div>
-                    <span>Email :</span>
-                    <p> {{user.email}} </p>
-                </div>
-                <div>
-                    <span>Phone :</span>
-                    <p>{{user.contact_number}}</p>
-                </div>
-                <div>
-                    <span>Address :</span>
-                    <p>No1, Pyay Road, Thit Sar Street, Yangon</p>
-                </div>
-                <div>
-                    <span>Bio :</span>
-                    <p> {{user.bio}} </p>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="atc">Save</button>
+                        <a href="{% url 'profile' %}" class="atc-cancel">Cancel</a>
+                    </form>
                 </div>
             </div>
+            {% else %}
+            <!-- Display Info -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Personal Information</h2>
+                    <a href="{% url 'edit_user_info' user.id %}" class="atc">Edit</a>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Name:</strong>
+                        <p class="mb-1">{{ user.username }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Email:</strong>
+                        <p class="mb-1">{{ user.email }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Phone:</strong>
+                        <p class="mb-1">{{ user.contact_number }}</p>
+                    </div>
+
+                    <div>
+                        <strong>Bio:</strong>
+                        <p class="mb-0">{{ user.bio }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
-    <section class="food-section2">
-        <h1>Favourite</h1>
+    <section class="food_section layout_padding-bottom gap-5">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    Favorite Menus
+                </h2>
+            </div>
     
-        <div class="food-container2">
-                        {% for item in favorite_items %}
-                    <div class="food-card">
-                        <a href="{% url 'menu:menu_detail' item.id %}"><img src="{{ item.photo.url }}" alt="{{ item.item_name }}"></a>
-                    
-                        <div class="food-info">
-                            <div class="food-details">
-                                {# <div class="rating">{{ item.avg_rating|default:"No ratings yet" }}</div> #}
-                                {% if item.avg_rating %}
-                                <div class="rating"> Rating : {{item.avg_rating}} ★ </div>
-                    
-                                {% else %}
-                                <div> No Rating yet </div>
-                                {% endif %}
-                                <div class="category">{{ item.category.name }}</div>
-                            </div>
-                            <h3>{{ item.item_name }}</h3>
-                            <p class="price"> $ {{ item.price }}</p>
-                            <div class="actionss">
-                                <button class="add-to-cart" onclick="incrementCartCount()">Add to Cart</button>
-                                <div class="other-actions">
-                                    {# <button><i class="fa-solid fa-heart"></i></button> #}
-                                    <a href="{% url 'menu:menu_detail' item.id %}">
-                                        <button><i class="fa-solid fa-eye"></i></button>
-                                    </a>
+    
+            <div class="filters-content">
+                <div class="row grid">
+                    {% for item in favorite_items %}
+                    <div class="col-sm-6 col-lg-4 all {{ item.category.name|slugify }}">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <a href="{% url 'menu:menu_detail' item.id %}"><img src="{{item.photo.url}}" alt=""></a>
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        {{item.item_name}}
+                                    </h5>
+                                    <p>
+                                        {{item.description}}
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            ${{item.price}}
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 456.029 456.029"
+                                                style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                                <g>
+                                                    <g>
+                                                        <path
+                                                            d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                                                             c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                                                             C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                                                             c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                                                             C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <path
+                                                            d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                             c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                                <g>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        {% endfor %}
-
-        </div>
-        <!-- Pagination -->
-        <div class="pagination">
-            <button><i class="fa-solid fa-arrow-left"></i></button>
-            <button class="active">1</button>
-            <button>2</button>
-            <button><i class="fa-solid fa-arrow-right"></i></button>
+                    {% endfor %}
+                </div>
+            </div>
+    
+    
+    
+    
+            <div class="btn-box">
+                <a href="">
+                    View More
+                </a>
+            </div>
         </div>
     </section>
-
-{% endblock content %}
-{% block script_block %}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const foodCards = Array.from(document.querySelectorAll('.food-card')); // Select all food cards
-            const paginationContainer = document.querySelector('.pagination');
-            const itemsPerPage = 8; // Number of items per page
-
-            let currentPage = 1;
-            const totalPages = Math.ceil(foodCards.length / itemsPerPage);
-
-            // Function to render food cards for the current page
-            const renderFoodCards = () => {
-                // Hide all food cards initially
-                foodCards.forEach((card) => (card.style.display = 'none'));
-
-                // Show only the items for the current page
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-
-                foodCards.slice(start, end).forEach((card) => {
-                    card.style.display = 'block';
-                });
-            };
-
-            // Function to update pagination buttons
-            const updatePagination = () => {
-                paginationContainer.innerHTML = ''; // Clear existing buttons
-
-                // Left arrow
-                const prevButton = document.createElement('button');
-                prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(prevButton);
-
-                // Numbered buttons
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = i;
-                    if (i === currentPage) {
-                        pageButton.classList.add('active');
-                    }
-                    pageButton.addEventListener('click', () => {
-                        currentPage = i;
-                        renderFoodCards();
-                        updatePagination();
-                    });
-                    paginationContainer.appendChild(pageButton);
-                }
-
-                // Right arrow
-                const nextButton = document.createElement('button');
-                nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
-                nextButton.disabled = currentPage === totalPages;
-                nextButton.addEventListener('click', () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(nextButton);
-            };
-
-            // Initialize the pagination
-            renderFoodCards();
-            updatePagination();
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const foodCards = Array.from(document.querySelectorAll('.review')); // Select all food cards
-            const paginationContainer = document.querySelector('.pagination');
-            const itemsPerPage = 3; // Number of items per page
-
-            let currentPage = 1;
-            const totalPages = Math.ceil(foodCards.length / itemsPerPage);
-
-            // Function to render food cards for the current page
-            const renderFoodCards = () => {
-                // Hide all food cards initially
-                foodCards.forEach((card) => (card.style.display = 'none'));
-
-                // Show only the items for the current page
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-
-                foodCards.slice(start, end).forEach((card) => {
-                    card.style.display = 'block';
-                });
-            };
-
-            // Function to update pagination buttons
-            const updatePagination = () => {
-                paginationContainer.innerHTML = ''; // Clear existing buttons
-
-                // Left arrow
-                const prevButton = document.createElement('button');
-                prevButton.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(prevButton);
-
-                // Numbered buttons
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = i;
-                    if (i === currentPage) {
-                        pageButton.classList.add('active');
-                    }
-                    pageButton.addEventListener('click', () => {
-                        currentPage = i;
-                        renderFoodCards();
-                        updatePagination();
-                    });
-                    paginationContainer.appendChild(pageButton);
-                }
-
-                // Right arrow
-                const nextButton = document.createElement('button');
-                nextButton.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
-                nextButton.disabled = currentPage === totalPages;
-                nextButton.addEventListener('click', () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderFoodCards();
-                        updatePagination();
-                    }
-                });
-                paginationContainer.appendChild(nextButton);
-            };
-
-            // Initialize the pagination
-            renderFoodCards();
-            updatePagination();
-        });
-
-    </script>
-{% endblock script_block %}
+</div>
+{% endblock %}

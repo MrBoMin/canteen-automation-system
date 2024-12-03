@@ -1,464 +1,150 @@
 {% extends "base.html" %}
-{% block title %}
-Your order
-{% endblock title %}
 {% block style_block %}
-    <style>
-        .table_body {
-            height: 215px;
-            font-size: 23px;
-        }
-    
-        th {
-            background-color: #0056b3;
-            color: white;
-            height: 95px;
-            font-size: 23px;
-        }
-    
-        /* body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-            } */
-    
-        .cart-container {
-            width: 83%;
-            max-width: 1645px;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            margin-left: 10%;
-            margin-top: 100px;
-        }
-    
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    
-        th,
-        td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-    
-        th {
-            background-color: #0056b3;
-            color: white;
-        }
-    
-        .quantity {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    
-        .quantity button {
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 0 5px;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-        }
-    
-        .quantity input {
-            text-align: center;
-            border: 1px solid #ddd;
-            height: 46px;
-            width: 100px;
-            border-radius: 50px;
-        }
-    
-        .image_column {
-            width: 250px;
-        }
-    
-        .description_column {
-            width: 415px;
-        }
-    
-        .price_column {
-            width: 230px;
-        }
-    
-        .quantity_column {
-            width: 243px;
-        }
-    
-        .total_column {
-            width: 249px;
-        }
-    
-        .remove-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            font-size: 44px;
-            cursor: pointer;
-        }
-    
-        .cart-summary-container {
-            display: flex;
-            flex-wrap: wrap;
-            /* background-color: #fff; */
-            padding: 20px 0px;
-            border-radius: 8px;
-            /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
-            /* max-width: 960px; */
-            margin-top: 20px;
-            width: 100%;
-            justify-content: space-between;
-        }
-    
-        .cart-summary-image {
-            width: 100%;
-            max-width: 50%;
-            padding-right: 20px;
-            box-sizing: border-box;
-        }
-    
-        .cart-summary-image img {
-            width: 109%;
-            height: auto;
-            border-radius: 8px;
-        }
-    
-        .cart-summary-details {
-            width: 100%;
-            max-width: 43%;
-            background-color: #003366;
-            color: white;
-            padding: 20px 53px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            box-sizing: border-box;
-            height: 420px;
-            font-size: 25px;
-            height: 548px;
-        }
-    
-        .cart-summary-header {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-    
-        .summary-details {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            line-height: 2.5;
-            border-top: 2px solid white;
-        }
-    
-        .summary-details li {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-        }
-    
-        .summary-details li:last-child {
-            border-bottom: none;
-            font-weight: bold;
-        }
-    
-        .checkout-btn {
-            background-color: #FFFFFF;
-            color: black;
-            border: none;
-            padding: 15px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 40px;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: bolder;
-            width: 100%;
-            height: 75px;
-        }
-    
-        .product-image {
-            width: 186px;
-            height: 186px;
-            object-fit: cover;
-        }
-    
-        .cart-container {
-            width: 83%;
-            max-width: 1645px;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            margin-left: 10%;
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-    
-        .cart-summary-container {
-            display: flex;
-            flex-wrap: wrap;
-            /* background-color: #fff; */
-            padding: 20px 0px;
-            border-radius: 8px;
-            /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
-            /* max-width: 960px; */
-            margin-top: 20px;
-            width: 100%;
-            justify-content: space-between;
-        }
-    
-        .order-status-tracker {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* margin: 20px 0; */
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 800px;
-        }
-    
-        .status-step {
-            text-align: center;
-            position: relative;
-            margin-top: 1%;
-        }
-    
-        .status-icon {
-            width: 90px;
-            height: 90px;
-            background-color: #28a745;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 24px;
-            margin: 0 auto;
-        }
-    
-        .status-line {
-            height: 4px;
-            width: 78px;
-            background-color: #28a745;
-            margin: -8px;
-        }
-    
-        .red {
-            background-color: #dc3545;
-            color: #dc3545;
-        }
-    
-        .status-text {
-            font-size: 20px;
-            font-weight: bold;
-            color: #555;
-            /* margin-top: 8px; */
-            margin-bottom: 10px;
-        }
-    
-        .status-check {
-            color: #28a745;
-            font-size: 25px;
-            margin-top: 18px;
-        }
-    
-        .completed .status-icon {
-            background-color: #28a745;
-        }
-    
-        .pending .status-icon {
-            background-color: #dc3545;
-        }
-    
-        .pending .status-check {
-            color: #dc3545;
-        }
-    
-        .cart-summary-image img {
-            width: 109%;
-            height: auto;
-            border-radius: 8px;
-        }
-    
-        .cart-summary-details {
-            width: 100%;
-            max-width: 43%;
-            background-color: #003366;
-            color: white;
-            padding: 20px 53px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            box-sizing: border-box;
-            height: 420px;
-            font-size: 25px;
-            height: 548px;
-        }
-    
-        .cart-summary-header {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-    
-        .summary-details {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            line-height: 2.5;
-            border-top: 2px solid white;
-        }
-    
-        .summary-details li {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-        }
-    
-        .summary-details li:last-child {
-            border-bottom: none;
-            font-weight: bold;
-        }
-    
-        .checkout-btn {
-            background-color: #FFFFFF;
-            color: black;
-            border: none;
-            padding: 15px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 40px;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: bolder;
-            width: 100%;
-            height: 75px;
-        }
+<style>
+    .btn-warning {
+        background-color: #f1c40f;
+        /* A lighter yellow */
+        border-color: #f39c12;
+        /* A deeper yellow for border */
+    }
 
-        .order-head{
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-    
-        @media (max-width: 768px) {
-            .cart-summary-container {
-                flex-direction: column;
-            }
-    
-            .cart-summary-image,
-            .cart-summary-details {
-                max-width: 100%;
-            }
-        }
-    </style>
+    .alert-warning {
+        background-color: #fef6e4;
+        /* Light yellow background */
+        color: #f39c12;
+        /* A deeper yellow text */
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
 {% endblock style_block %}
 
+{% block main %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Your Order Information</h2>
 
-{% block content %}
-    
-    <div class="cart-container">
-        <h2 class="order-head">Your Order Information</h2>
-        <table>
-            <thead>
+    <!-- Order Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
-                <th>Ordered Time</th>
+                    <th>Ordered Time</th>
                     <th>Image</th>
                     <th>Description</th>
                     <th>Price</th>
-                    <th class="quantity_column">Quantity</th>
-                    <th class="total_column">Total</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
                 </tr>
             </thead>
-            <tbody id="cart-items">
+            <tbody>
                 {% for order_item in order.order_items.all %}
                 <tr>
                     <td>{{ order.order_date|date:"Y-m-d H:i:s" }}</td>
-                    <td class="table_body image_column">
-                        <img src="{{ order_item.item.photo.url }}" alt="{{ order_item.item.item_name }}" class="product-image">
-                    </td>
-                    <td class="table_body description_column">{{ order_item.item.item_name }}</td>
-                    <td class="table_body price_column">{{ order_item.price }} MMK</td>
-                    <td class="table_body">{{ order_item.quantity }}</td>
-                    <td class="table_body">
-                        <label class="item-total">{{ order_item.subtotal }}</label> MMK
-                    </td>
+                    <td><img src="{{ order_item.item.photo.url }}" alt="{{ order_item.item.item_name }}"
+                            class="img-fluid" style="width: 100px; height: auto;"></td>
+                    <td>{{ order_item.item.item_name }}</td>
+                    <td>{{ order_item.price }} MMK</td>
+                    <td>{{ order_item.quantity }}</td>
+                    <td>{{ order_item.subtotal }} MMK</td>
                 </tr>
                 {% endfor %}
             </tbody>
-
         </table>
-    
-        <div class="cart-summary-container">
-            <div class="order-status-tracker">
-                <div class="status-line"></div>
-                <div class="status-step completed">
-                    <div class="status-text">Received</div>
-                    <div class="status-icon"><i class="fas fa-envelope"></i></div>
-                    <div class="status-check"><i class="fas fa-check"></i></div>
-                </div>
-                <div class="status-line"></div>
-                <div class="status-line"></div>
-                <div class="status-step completed">
-                    <div class="status-text">Processing</div>
-                    <div class="status-icon"><i class="fas fa-utensils"></i></div>
-                    <div class="status-check"><i class="fas fa-check"></i></div>
-                </div>
-                <div class="status-line "></div>
-                <div class="status-line red"></div>
-                <div class="status-step pending">
-                    <div class="status-text">Delivering</div>
-                    <div class="status-icon"><i class="fas fa-truck"></i></div>
-                    <div class="status-check"><i class="fas fa-sync-alt"></i></div>
-                </div>
-                <div class="status-line red"></div>
-            </div>
-        <div class="cart-summary-details">
-            
-            <ul class="summary-details">
-                <li>
-                    <span>Subtotal :</span>
-                    <span id="subtotal">
-                       $ {{ order.total_amount }}
+    </div>
+
+    <!-- Order Status & Summary Section -->
+    <div class="row mt-5 mb-3">
+        <!-- Order Status Tracker -->
+        <div class="col-md-6">
+            <h4 class="mb-3">Order Status</h4>
+            <div class="status-tracker">
+                {% for status, label in order.STATUS_CHOICES %}
+                {% if status != 'Cancelled' %}
+                <div class="status-step d-flex align-items-center">
+                    <div
+                        class="status-icon {% if order.status == status %}bg-success text-white{% else %}bg-light text-dark{% endif %} mb-3">
+                        <i class="fas {% if order.status == status %}fa-check{% else %}fa-times{% endif %}"></i>
+                    </div>
+                    <span
+                        class="ml-3 {% if order.status == status %}font-weight-bold text-success{% else %}text-muted{% endif %}">
+                        {{ label }}
                     </span>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-md-6 card p-4 bg-light shadow-lg rounded">
+            <h4 class="text-center mb-4 text-primary font-weight-bold">Order Summary</h4>
+            <ul class="list-unstyled">
+                <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span class="text-muted">Subtotal:</span>
+                    <span class="font-weight-bold">{{ order.total_amount }} $</span>
                 </li>
-                <li style="border-top: 2px solid white;">
-                    <span>Total :</span>
-                    <span id="total">
-                       ${{ order.total_amount }}                </span>
+                <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span class="text-muted"><strong>Total:</strong></span>
+                    <span class="font-weight-bold text-success"><strong>{{ order.total_amount }} $</strong></span>
                 </li>
             </ul>
-            <button class="checkout-btn">Proceed to Payment</button>
-        </div>
 
-
+            <!-- Conditional display based on the order status -->
+            {% if order.status == 'Pending' %}
+            <div class="alert alert-warning text-center mt-3">
+                <strong>Wait for Confirmation by Canteen Admin.</strong>
+            </div>
+            {% elif order.status == 'Confirmed' %}
+            {% if order.payment_method == 'Cash on Pickup' %}
+            <div class="alert alert-warning text-center mt-3">
+                <strong>Payment Method:</strong> Cash on Pickup<br>
+                <strong>Status:</strong> Awaiting Pickup
+            </div>
+            {% elif order.payment_status %}
+            <div class="alert alert-success text-center mt-3">
+                <strong>Payment Method:</strong> {{ order.payment_method }}<br>
+                <strong>Status:</strong> Payment Completed
+            </div>
+            {% else %}
+            <a href="{% url 'payment:payment_form' order.id %}"
+                class="btn btn-warning btn-block py-3 font-weight-bold text-white">Proceed to Payment</a>
+            {% endif %}
+            {% elif order.status == 'Processing' %}
+            <div class="alert alert-success text-center mt-3">
+                <strong>Payment Method:</strong> {{ order.payment_method }}<br>
+                {% if order.payment_method == 'Cash on Pickup' %}
+                <strong>Status:</strong> Awaiting Pickup
+                {% elif order.payment_status %}
+                <strong>Status:</strong> Payment Completed
+                {% else %}
+                <strong>Status:</strong> Awaiting Payment
+                {% endif %}
+            </div>
+            {% elif order.status == 'Ready to Pickup' %}
+            <div class="alert alert-success text-center mt-3">
+                <strong>Payment Method:</strong> {{ order.payment_method }}<br>
+                {% if order.payment_method == 'Cash on Pickup' %}
+                <strong>Status:</strong> Awaiting Pickup
+                {% elif order.payment_status %}
+                <strong>Status:</strong> Payment Completed
+                {% else %}
+                <strong>Status:</strong> Awaiting Payment
+                {% endif %}
+            </div>
+            {% elif order.status == 'Completed' %}
+            <div class="alert alert-success text-center mt-3">
+                <strong>Order Completed!</strong>
+            </div>
+            {% elif order.status == 'Cancelled' %}
+            <div class="alert alert-danger text-center mt-3">
+                <strong>Sorry, your order has been cancelled by the admin.</strong>
+            </div>
+            {% endif %}
         </div>
     </div>
-{% endblock content %}
+</div>
 
+{% endblock main %}

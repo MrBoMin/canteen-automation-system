@@ -1,0 +1,162 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content_title %}
+{{ index_title|default:"Fresh Corner" }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Main Grid for Layout -->
+<div class="grid grid-cols-1 gap-6 mt-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+    <!-- Total Revenue Card -->
+    <div class="card bg-base-100 card-bordered">
+        <div class="card-body">
+            <h4 class="font-medium">{% trans "Total Revenue" %}</h4>
+            <p>${{ sub_card_1_value|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <!-- Total Orders Card -->
+    <div class="card bg-base-100 card-bordered">
+        <div class="card-body">
+            <h4 class="font-medium">{% trans "Total Orders" %}</h4>
+            <p>{{ sub_card_2_value }}</p>
+        </div>
+    </div>
+
+    <!-- Total Menu Card -->
+    <div class="card bg-base-100 card-bordered">
+        <div class="card-body">
+            <h4 class="font-medium">{% trans "Total Menu" %}</h4>
+            <p>{{ sub_card_3_value }}</p>
+        </div>
+    </div>
+
+    <!-- Total User Card -->
+    <div class="card bg-base-100 card-bordered">
+        <div class="card-body">
+            <h4 class="font-medium">{% trans "Total User" %}</h4>
+            <p>{{ sub_card_4_value }}</p>
+        </div>
+    </div>
+
+    <!-- Total Revenue by Categories Chart (First Chart) -->
+    <div class="card bg-base-100 card-bordered col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-2">
+        <div class="card-body">
+            <h3 class="font-medium">{% trans "Total Revenue by Categories" %}</h3>
+            <canvas id="revenueByCategoryChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Order Count by Day Chart (Second Chart) -->
+    <div class="card bg-base-100 card-bordered col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-2">
+        <div class="card-body">
+            <h3 class="font-medium">{% trans "Order Count by Day" %}</h3>
+            <canvas id="orderCountByDayChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="card bg-base-100 card-bordered col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
+        <div class="card-body">
+            <div class="flex items-center justify-between">
+                <span class="font-medium">{% trans "Recent Orders" %}</span>
+                <a class="btn btn-link" href="{% url 'admin:orders_order_changelist' %}">{% trans "Show All" %}</a>
+            </div>
+
+            <!-- Table with Scroll -->
+            <div class="overflow-x-auto mt-3">
+                <table class="table w-full min-w-[900px]">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left">{% trans "Order ID" %}</th>
+                            <th class="px-4 py-2 text-left">{% trans "User" %}</th>
+                            <th class="px-4 py-2 text-left">{% trans "Total" %}</th>
+                            <th class="px-4 py-2 text-left">{% trans "Status" %}</th>
+                            <th class="px-4 py-2 text-left">{% trans "Date" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td class="px-4 py-2">{{ order.id }}</td>
+                            <td class="px-4 py-2">{{ order.user.username }}</td>
+                            <td class="px-4 py-2">${{ order.total_amount|floatformat:2 }}</td>
+                            <td class="px-4 py-2">{{ order.get_status_display }}</td>
+                            <td class="px-4 py-2">{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctxCategoryRevenue = document.getElementById('revenueByCategoryChart').getContext('2d');
+        const ctxOrderCountByDay = document.getElementById('orderCountByDayChart').getContext('2d');
+
+        // Parse revenue_by_category data
+        const revenueByCategoryData = JSON.parse('{{ revenue_by_category|safe }}');
+        const categoryLabels = revenueByCategoryData.map(item => item['category_name']);
+        const revenueData = revenueByCategoryData.map(item => item['total_revenue']);
+
+        // Create the total revenue by categories column chart
+        new Chart(ctxCategoryRevenue, {
+            type: 'bar',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    label: '{% trans "Revenue by Category" %}',
+                    data: revenueData,
+                    backgroundColor: 'rgba(39, 174, 96, 0.6)',
+                    borderColor: '#27ae60',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: '{% trans "Categories" %}' } },
+                    y: { title: { display: true, text: '{% trans "Revenue ($)" %}' }, beginAtZero: true }
+                }
+            }
+        });
+
+        // Parse order_count_by_day data
+        const orderCountByDayData = JSON.parse('{{ order_count_by_day|safe }}');
+        const orderDates = orderCountByDayData.map(item => item['date']);
+        const orderCounts = orderCountByDayData.map(item => item['order_count']);
+
+        // Create the order count by day line chart
+        new Chart(ctxOrderCountByDay, {
+            type: 'line',
+            data: {
+                labels: orderDates,
+                datasets: [{
+                    label: '{% trans "Order Count by Day" %}',
+                    data: orderCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: '{% trans "Date" %}' } },
+                    y: { title: { display: true, text: '{% trans "Order Count" %}' }, beginAtZero: true }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
