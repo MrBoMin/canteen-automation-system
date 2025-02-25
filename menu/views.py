@@ -2,7 +2,6 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import MenuItem, Favorite, Review, Category
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count 
-
 from django.shortcuts import render
 from .models import MenuItem, Category
 
